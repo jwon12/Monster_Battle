@@ -1,15 +1,15 @@
 package Client;
 
-import java.io.IOException;
+
 import java.net.Socket;
-import java.net.UnknownHostException;
+
 
 public class C_Main {
 	
 	Socket withServer = null;
 	
 	C_Main() throws Exception{
-		withServer = new Socket("10.0.0.109",9999);
+		withServer = new Socket("10.0.0.109",8888);
 		new C_TC(withServer);
 	}
 	

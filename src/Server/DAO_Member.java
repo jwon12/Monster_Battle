@@ -12,7 +12,7 @@ public class DAO_Member implements DAO_Interface{
 	private ResultSet rs;
 	public static DAO_Member mySin = null;
 	
-	DAO_Member(){
+	private DAO_Member(){
 		init();
 	}
 	

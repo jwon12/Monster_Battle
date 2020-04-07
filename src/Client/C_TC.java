@@ -9,15 +9,20 @@ public class C_TC {
 	C_TC mySin = null;
 	private InputStream reMsg = null;
 	private OutputStream sendMsg = null;
+	Frame_Login F_login = null;
+	C_Analysis Analysis = null;
 	
 	public C_TC(Socket withServer) {
 		this.withServer = withServer;
 		mySin = this;
+		Analysis = C_Analysis.getInstance();		
 		start();
 	}
 
 	private void start() {
 		recive();
+		F_login = new Frame_Login(this);
+		Analysis.setFrame_loginSin(F_login);
 		
 	}
 
@@ -34,6 +39,9 @@ public class C_TC {
 						reMsg.read(reBuffer);
 						String Smsg = new String(reBuffer);
 						Smsg = Smsg.trim();
+						System.out.println(Smsg);
+						Analysis.reMsg(mySin,Smsg);
+						
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

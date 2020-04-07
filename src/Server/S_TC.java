@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.StringTokenizer;
 
 public class S_TC extends Thread{
 	
@@ -12,6 +13,8 @@ public class S_TC extends Thread{
 	private InputStream reMsg = null;
 	private OutputStream sendMsg = null;
 	private S_TC mySin = null;
+	private String myID = null;
+	private String myNickname = null;
 	
 	public S_TC(Socket withClient) {
 		this.withClient = withClient;
@@ -68,6 +71,16 @@ public class S_TC extends Thread{
 			e.printStackTrace();
 		}
 		
+	}
+
+	public void setIDNickName(String idNickName) {
+		StringTokenizer ST = new StringTokenizer(idNickName," ");
+		myID = ST.nextToken();
+		myNickname = ST.nextToken();
+	}
+	
+	public String getNickName() {
+		return myNickname;
 	}
 	
 }

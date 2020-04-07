@@ -10,12 +10,11 @@ public class S_Main {
 	ServerSocket serverS = null;
 	Socket withClient = null;
 	S_Analysis Analysis = S_Analysis.getInstance();
-	
 	ArrayList<Socket> CList = new ArrayList<>();
 	
 	S_Main() throws Exception{
 		serverS = new ServerSocket();
-		serverS.bind(new InetSocketAddress("10.0.0.109",9999));
+		serverS.bind(new InetSocketAddress("10.0.0.109",8888));
 		
 		while(true) {
 			System.out.println("서버 대기중");
