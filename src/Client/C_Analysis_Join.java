@@ -12,7 +12,12 @@ public class C_Analysis_Join {
 			}
 		}
 		System.out.println(msg);
-		String commend = msg.substring(0,index);
+		String commend;
+		if(index == 0) {
+			commend = msg;
+		}else {
+			commend = msg.substring(0,index);			
+		}
 		switch(commend) {
 		case "ckid":
 			String booleanCk = msg.substring(index+1);
@@ -25,6 +30,7 @@ public class C_Analysis_Join {
 			break;
 		case "joinSuccess":
 			System.out.println("저장완료");
+			F_Join.end();
 			break;
 		}
 		

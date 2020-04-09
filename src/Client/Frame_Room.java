@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -91,6 +92,20 @@ public class Frame_Room extends JFrame {
 		addPopup(list, popupMenu);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("대전 신청");
+		mntmNewMenuItem.addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		popupMenu.add(mntmNewMenuItem);
 
 		textArea = new JTextArea();

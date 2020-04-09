@@ -131,8 +131,7 @@ public class Frame_Join extends JFrame {
 				if (!idck.equals("사용가능")) {
 					JOptionPane.showMessageDialog(null, "중복체크 하셔야 합니다.");
 				} else if (idTextField.getText().equals("") || pwTextField.getText().equals("")
-						|| NickTextField.getText().equals("") || M1_NickTextField.getText().equals("")
-						|| M1_NickTextField.getText().equals("") || M3_NickTextField.getText().equals("")) {
+						|| NickTextField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "필수 칸을 채워주세요.");
 				} else {
 					ServerSend();
@@ -182,9 +181,19 @@ public class Frame_Join extends JFrame {
 			String SaveMsg = "/join saveId " + SaveId + " " + SavePw + " " + SaveNick;
 			client_Sin.send(SaveMsg);
 			Thread.sleep(500);
+			
+			if(M1_NickTextField.getText().equals("")) {
+				M1_NickTextField.setText(comboBox.getSelectedItem().toString());
+			}
+			if(M2_NickTextField.getText().equals("")) {
+				M2_NickTextField.setText(comboBox_1.getSelectedItem().toString());
+			}
+			if(M3_NickTextField.getText().equals("")) {
+				M3_NickTextField.setText(comboBox_2.getSelectedItem().toString());
+			}
 			String m1 = comboBox.getSelectedItem().toString()+"/"+M1_NickTextField.getText();
-			String m2 = comboBox.getSelectedItem().toString()+"/"+M2_NickTextField.getText();
-			String m3 = comboBox.getSelectedItem().toString()+"/"+M3_NickTextField.getText();
+			String m2 = comboBox_1.getSelectedItem().toString()+"/"+M2_NickTextField.getText();
+			String m3 = comboBox_2.getSelectedItem().toString()+"/"+M3_NickTextField.getText();
 			SaveMsg = "/join saveMon "+SaveId+" "+m1+" "+m2+" "+m3;
 			client_Sin.send(SaveMsg);
 		} catch (InterruptedException e) {
@@ -192,6 +201,9 @@ public class Frame_Join extends JFrame {
 			e.printStackTrace();
 		}
 
+	}
+	public void end() {
+		this.setVisible(false);
 	}
 
 }
