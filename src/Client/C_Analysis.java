@@ -9,6 +9,7 @@ public class C_Analysis {
 	C_Analysis_Battle A_Battle = null;
 	Frame_Login F_Login = null;
 	Frame_Room F_Room = null;
+	Frame_Join F_Join = null;
 	
 	
 	
@@ -41,14 +42,23 @@ public class C_Analysis {
 		String second = msg.substring(index+1);
 		
 		switch(fist) {
+		case "/server":
+			System.out.println(second);
+			break;
 		case "/login":
 			A_Login.ckMsg(second);
 			break;
 		case "/room":
 			A_Room.ckMsg(second);
 			break;
+		case "/join":
+			A_Join.ckMsg(second);
 		}
 
+	}
+	public void setFrame_JoinSin(Frame_Join j) {
+		F_Join = j;
+		A_Join.setF_Join(j);
 	}
 	
 	public void setFrame_loginSin(Frame_Login l) {
@@ -57,7 +67,7 @@ public class C_Analysis {
 	}
 	public void setFrame_RoomSin(Frame_Room r) {
 		F_Room = r;
-//		A_Room.setF_Room(r);
+		A_Room.setF_Room(r);
 	}
 
 }

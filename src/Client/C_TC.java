@@ -35,16 +35,16 @@ public class C_TC {
 					System.out.println("receive start~~");
 					while (true) {
 						reMsg = withServer.getInputStream();
-						byte[] reBuffer = new byte[100];
+						byte[] reBuffer = new byte[500];
 						reMsg.read(reBuffer);
 						String Smsg = new String(reBuffer);
 						Smsg = Smsg.trim();
-						System.out.println(Smsg);
 						Analysis.reMsg(mySin,Smsg);
 						
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
+					e.printStackTrace();
 					System.out.println("receive end~");
 					return;
 				}
@@ -69,8 +69,6 @@ public class C_TC {
 	}
 
 	private void endCat() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

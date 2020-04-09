@@ -32,7 +32,7 @@ public class S_TC extends Thread{
 		while(true) {
 			try {
 				reMsg = withClient.getInputStream();
-				byte[] reBuffer = new byte[100];
+				byte[] reBuffer = new byte[500];
 				reMsg.read(reBuffer);
 				String msg = new String(reBuffer);
 				msg = msg.trim();
@@ -79,8 +79,8 @@ public class S_TC extends Thread{
 		myNickname = ST.nextToken();
 	}
 	
-	public String getNickName() {
-		return myNickname;
+	public String getID() {
+		return myID;
 	}
 	
 }

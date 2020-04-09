@@ -2,6 +2,7 @@ package Client;
 
 public class C_Analysis_Room {
 	Frame_Room F_Room = null;
+	
 	public void setF_Room(Frame_Room r) {
 		F_Room = r;
 	}
@@ -17,13 +18,21 @@ public class C_Analysis_Room {
 		}
 		System.out.println("접속자"+msg);
 		
-		String fist = msg.substring(0, index);
-		String second= msg.substring(index+1);
+		String commend = msg.substring(0, index);
 		
-		switch(fist) {
+		switch(commend) {
 		case "addmember":
-			F_Room.setaddId(second);
+			String nowid= msg.substring(index+1);
+			if(!nowid.equals(F_Room.getMyID())) {
+				F_Room.setaddId(nowid);				
+			}
 			break;
+		case "chat":
+			String idmsg = msg.substring(index+1);
+			idmsg = idmsg+"\n";
+			F_Room.setChat(idmsg);
+			break;
+			
 		}
 	}
 

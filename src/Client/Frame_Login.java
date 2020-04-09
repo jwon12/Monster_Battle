@@ -69,8 +69,9 @@ public class Frame_Login extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Frame_Join();
-				
+				 Frame_Join F_Join = new Frame_Join(client_Sin);
+				C_Analysis Analysis= C_Analysis.getInstance();
+				Analysis.setFrame_JoinSin(F_Join);
 			}
 		});
 		sP.add(joinBtn);

@@ -2,6 +2,8 @@ package Client;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -25,6 +27,7 @@ public class Frame_Room extends JFrame {
 	private String myNickName = null;
 	private C_TC ClientSin = null;
 	private JList list;
+	private JTextArea textArea;
 	DefaultListModel<String> lm = new DefaultListModel<String>();
 
 	public Frame_Room(String id, String nickName, C_TC Sin) {
@@ -50,14 +53,36 @@ public class Frame_Room extends JFrame {
 
 		textField = new JTextField();
 		textField.setBounds(12, 380, 351, 30);
+		textField.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String msg = textField.getText();
+				textField.setText("");
+				ClientSin.send("/room chat "+myID+" "+msg);
+				
+			}
+		});
+		
 		contentPane.add(textField);
 		textField.setColumns(10);
 
-		JButton btnNewButton = new JButton("보내기");
-		btnNewButton.setBounds(375, 383, 97, 23);
-		contentPane.add(btnNewButton);
+		JButton sendButton = new JButton("보내기");
+		sendButton.setBounds(375, 383, 97, 23);
+		sendButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String msg = textField.getText();
+				textField.setText("");
+				ClientSin.send("/room chat "+myID+" "+msg);
+			}
+		});
+		contentPane.add(sendButton);
 
+		
 		list = new JList(lm);
+		lm.addElement(myID);
 		list.setBackground(Color.LIGHT_GRAY);
 		list.setBounds(12, 50, 146, 320);
 		contentPane.add(list);
@@ -68,15 +93,13 @@ public class Frame_Room extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("대전 신청");
 		popupMenu.add(mntmNewMenuItem);
 
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setBackground(Color.LIGHT_GRAY);
 		textArea.setBounds(170, 50, 312, 320);
 		contentPane.add(textArea);
 
 		this.setVisible(true);
-
-		ClientSin.send("/room " + id);
-
+		
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
@@ -99,8 +122,24 @@ public class Frame_Room extends JFrame {
 		});
 	}
 	
+	
+	public String getMyNickName() {
+		return myNickName;
+	}
+	public String getMyID() {
+		return myID;
+	}
+
+	public void setMyNickName(String myNickName) {
+		this.myNickName = myNickName;
+	}
+
 	public void setaddId(String id) {
 		lm.addElement(id);
 		this.setVisible(true);
+	}
+
+	public void setChat(String idmsg) {
+		textArea.append(idmsg);
 	}
 }
