@@ -7,10 +7,13 @@ import java.net.Socket;
 public class C_Main {
 	
 	Socket withServer = null;
+	Socket withObjectServer = null;
 	
 	C_Main() throws Exception{
-		withServer = new Socket("10.0.0.109",8888);
-		new C_TC(withServer);
+		withServer = new Socket("10.0.0.109",9999);
+		Thread.sleep(1000);
+		withObjectServer = new Socket("10.0.0.109",9998);
+		new C_TC(withServer,withObjectServer);
 	}
 	
 	

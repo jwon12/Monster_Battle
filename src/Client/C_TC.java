@@ -5,15 +5,17 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class C_TC {
-	Socket withServer = null;
-	C_TC mySin = null;
+	private Socket withServer = null;
+	private Socket withObjectServer = null;
+	private C_TC mySin = null;
 	private InputStream reMsg = null;
 	private OutputStream sendMsg = null;
-	Frame_Login F_login = null;
-	C_Analysis Analysis = null;
+	private Frame_Login F_login = null;
+	private C_Analysis Analysis = null;
 	
-	public C_TC(Socket withServer) {
+	public C_TC(Socket withServer, Socket withObjectServer) {
 		this.withServer = withServer;
+		this.withObjectServer = withObjectServer;
 		mySin = this;
 		Analysis = C_Analysis.getInstance();		
 		start();

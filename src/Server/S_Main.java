@@ -8,20 +8,25 @@ import java.util.ArrayList;
 public class S_Main {
 	
 	ServerSocket serverS = null;
+	ServerSocket serverS_Object = null;
 	Socket withClient = null;
 	S_Analysis Analysis = S_Analysis.getInstance();
 	ArrayList<Socket> CList = new ArrayList<>();
 	
 	S_Main() throws Exception{
 		serverS = new ServerSocket();
-		serverS.bind(new InetSocketAddress("10.0.0.109",8888));
+		serverS.bind(new InetSocketAddress("10.0.0.109",9999));
+		serverS_Object = new ServerSocket();
+		serverS_Object.bind(new InetSocketAddress("10.0.0.109",9998));
+		
+		
 		
 		while(true) {
 			System.out.println("서버 대기중");
 			withClient = serverS.accept();
 			CList.add(withClient);
 			System.out.println(withClient.getInetAddress()+"클라이언트 접속 함");
-			S_TC s = new S_TC(withClient);
+			S_TC s = new S_TC(withClient,serverS_Object);
 			s.start();
 		}
 		
