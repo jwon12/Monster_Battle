@@ -53,6 +53,10 @@ public class C_Analysis {
 			break;
 		case "/join":
 			A_Join.ckMsg(second);
+			break;
+		case "/battle":
+			A_Battle.ckMsg(second);
+			break;
 		}
 
 	}

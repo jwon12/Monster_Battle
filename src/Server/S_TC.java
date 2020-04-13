@@ -67,6 +67,8 @@ public class S_TC extends Thread {
 	public void O_send() {
 		try {
 			sendMsg2 = withC_Object.getOutputStream();
+			sendObject = new ObjectOutputStream(sendMsg2);
+			sendObject.writeObject(S_Object);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DAO_Monster implements DAO_Interface{
 	private Connection conn;
@@ -76,9 +77,33 @@ public class DAO_Monster implements DAO_Interface{
 		
 	}
 	@Override
-	public Object selAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<DTO_Monster> selAll() {
+		ArrayList<DTO_Monster> MList = new ArrayList<>();
+		String sql="select * from monster";
+		if(connect()) {
+			try {
+				stmt=conn.createStatement();
+				if(stmt != null) {
+					rs = stmt.executeQuery(sql); 
+					while(rs.next()) {
+						DTO_Monster m = new DTO_Monster();
+						m.setId(rs.getString("id"));
+						m.setOrigin(rs.getString("origin"));
+						m.setNickname(rs.getString("nickname"));
+						m.setLv(rs.getString("lv"));
+						MList.add(m);
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}else {
+			System.out.println("DB연결 실패");
+			System.exit(0);
+		}
+		return MList;
 	}
 	public static DAO_Monster getInstance() {
 		if(mySin == null) {

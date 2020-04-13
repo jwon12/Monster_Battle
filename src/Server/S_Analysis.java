@@ -40,10 +40,10 @@ public class S_Analysis {
 
 		String fist = msg.substring(0, index);
 		String second = msg.substring(index + 1);
-		
+
 		System.out.println(fist);
 		System.out.println(second);
-		
+
 		switch (fist) {
 		case "/login":
 			String idNickName = A_Login.Ck_IDPS(second);
@@ -54,9 +54,9 @@ public class S_Analysis {
 				Sin.setIDNickName(idNickName);
 				idList.add(Sin.getID());
 				TCList.add(Sin);
-				for(String id : idList) {
-					for(S_TC s : TCList) {
-						s.send("/room addmember "+id);
+				for (String id : idList) {
+					for (S_TC s : TCList) {
+						s.send("/room addmember " + id);
 						try {
 							Thread.sleep(500);
 						} catch (InterruptedException e) {
@@ -65,18 +65,22 @@ public class S_Analysis {
 						}
 					}
 				}
-				
+
 			}
 			break;
 		case "/room":
-			A_Room.ckMsg(Sin,second);
+			A_Room.ckMsg(Sin, second);
 			break;
 		case "/join":
-			A_Join.ckMsg(Sin,second);
+			A_Join.ckMsg(Sin, second);
+			break;
+		case "/battle":
+			A_Battle.ckMsg(second);
 			break;
 		}
 
 	}
+
 	public ArrayList<S_TC> getTCList() {
 		return TCList;
 	}

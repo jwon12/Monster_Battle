@@ -2,11 +2,11 @@ package Client;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
@@ -92,18 +93,20 @@ public class Frame_Room extends JFrame {
 		addPopup(list, popupMenu);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("대전 신청");
-		mntmNewMenuItem.addMouseMotionListener(new MouseMotionListener() {
+		mntmNewMenuItem.addActionListener(new ActionListener() {
 			
 			@Override
-			public void mouseMoved(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void actionPerformed(ActionEvent e) {
+				String opponent_id = (String)list.getSelectedValue();
+				if(id == null) {
+					JOptionPane.showMessageDialog(null, "대전할 대상을 선택하세요.");
+				}else if(id.equals(myID)) {
+					JOptionPane.showMessageDialog(null, "나자신은 대상으로 선택할수없습니다.");
+				}else {
+					System.out.println(id);
+					ClientSin.send("/battle apply "+myID+" "+opponent_id);
+					
+				}
 			}
 		});
 		popupMenu.add(mntmNewMenuItem);
@@ -116,6 +119,7 @@ public class Frame_Room extends JFrame {
 		this.setVisible(true);
 		
 	}
+
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
