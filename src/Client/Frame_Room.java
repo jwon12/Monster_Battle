@@ -98,14 +98,16 @@ public class Frame_Room extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String opponent_id = (String)list.getSelectedValue();
-				if(id == null) {
+				if(opponent_id == null) {
 					JOptionPane.showMessageDialog(null, "대전할 대상을 선택하세요.");
-				}else if(id.equals(myID)) {
+				}else if(opponent_id.equals(myID)) {
 					JOptionPane.showMessageDialog(null, "나자신은 대상으로 선택할수없습니다.");
 				}else {
-					System.out.println(id);
+					System.out.println(opponent_id);
 					ClientSin.send("/battle apply "+myID+" "+opponent_id);
-					
+					Frame_Battle_applySend s = new Frame_Battle_applySend(opponent_id);
+					C_Analysis a = C_Analysis.getInstance();
+					a.setFrame_send(s);
 				}
 			}
 		});

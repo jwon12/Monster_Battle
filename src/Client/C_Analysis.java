@@ -3,14 +3,18 @@ package Client;
 public class C_Analysis {
 
 	public static C_Analysis mySin = null;
-	C_Analysis_Login A_Login = null;
-	C_Analysis_Join A_Join = null;
-	C_Analysis_Room A_Room = null;
-	C_Analysis_Battle A_Battle = null;
-	Frame_Login F_Login = null;
-	Frame_Room F_Room = null;
-	Frame_Join F_Join = null;
+	private C_Analysis_Login A_Login = null;
+	private C_Analysis_Join A_Join = null;
+	private C_Analysis_Room A_Room = null;
+	private C_Analysis_Battle A_Battle = null;
+	private Frame_Login F_Login = null;
+	private Frame_Room F_Room = null;
+	private Frame_Join F_Join = null;
+	private Frame_Battle F_Battle = null;
 	
+	
+	Frame_Battle_applyRecive F_recive= null;
+	Frame_Battle_applySend F_send = null;
 	
 	
 	private C_Analysis() {
@@ -55,11 +59,15 @@ public class C_Analysis {
 			A_Join.ckMsg(second);
 			break;
 		case "/battle":
-			A_Battle.ckMsg(second);
+			A_Battle.ckMsg(Sin,second);
 			break;
 		}
 
 	}
+	public Frame_Room getFrame_Room() {
+		return F_Room;
+	}
+	
 	public void setFrame_JoinSin(Frame_Join j) {
 		F_Join = j;
 		A_Join.setF_Join(j);
@@ -73,5 +81,23 @@ public class C_Analysis {
 		F_Room = r;
 		A_Room.setF_Room(r);
 	}
+	public void setFrame_recive(Frame_Battle_applyRecive r) {
+		F_recive = r;
+	}
+	public void setFrame_send (Frame_Battle_applySend s) {
+		F_send = s;
+	}
+	public void setFrame_battle(Frame_Battle b) {
+		F_Battle = b;
+	}
 
+	public Frame_Battle_applyRecive getF_recive() {
+		return F_recive;
+	}
+
+	public Frame_Battle_applySend getF_send() {
+		return F_send;
+	}
+	
+	
 }

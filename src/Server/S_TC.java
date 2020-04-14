@@ -24,7 +24,6 @@ public class S_TC extends Thread {
 	private S_TC mySin = null;
 	private String myID = null;
 	private String myNickname = null;
-	private S_TC_Object S_Object = null;
 
 	public S_TC(Socket withClient, ServerSocket serverS_Object) throws Exception {
 		this.withClient = withClient;
@@ -40,7 +39,10 @@ public class S_TC extends Thread {
 	@Override
 	public void run() {
 		recive();
-		O_recive();
+		TC_Object a = new TC_Object();
+		a.Battle_msg = "하하하";
+//		O_send(a);
+
 	}
 
 	private void O_recive() {
@@ -53,7 +55,7 @@ public class S_TC extends Thread {
 					try {
 						reMsg2 = withC_Object.getInputStream();
 						reObject = new ObjectInputStream(reMsg2);
-						S_Object = (S_TC_Object)reObject.readObject();
+						TC_Object S_Object = (TC_Object)reObject.readObject();
 						
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -64,11 +66,11 @@ public class S_TC extends Thread {
 		}).start();
 
 	}
-	public void O_send() {
+	public void O_send(TC_Object a) {
 		try {
 			sendMsg2 = withC_Object.getOutputStream();
 			sendObject = new ObjectOutputStream(sendMsg2);
-			sendObject.writeObject(S_Object);
+			sendObject.writeObject(a);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

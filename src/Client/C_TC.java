@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import Server.S_TC_Object;
+import Server.TC_Object;
 
 public class C_TC {
 	private Socket withServer = null;
@@ -42,8 +42,8 @@ public class C_TC {
 					try {
 						reMsg2 = withObjectServer.getInputStream();
 						reObject = new ObjectInputStream(reMsg2);
-						C_TC_Object S_Object = (C_TC_Object) reObject.readObject();
-
+						TC_Object S_Object = (TC_Object) reObject.readObject();
+						//System.out.println(S_Object.getMsg());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
