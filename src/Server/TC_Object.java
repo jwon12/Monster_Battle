@@ -8,6 +8,12 @@ public class TC_Object implements Serializable {
 	// palyer1 몬스터
 	String player1_id;
 
+	String[] player1_Monster_OriginName = new String[3];
+	String[] player1_Monster_NiceName = new String[3];
+	int[] player1_Monster_Lv = new int[3];
+	int[] player1_Monster_totalP = new int[3];
+	
+	
 	String player1_Monster1_OriginName;
 	String player1_Monster1_NiceName;
 	int player1_Monster1_Lv;
@@ -48,6 +54,7 @@ public class TC_Object implements Serializable {
 	int player2_Monster3_nowP;
 	
 	String Battle_msg;
+	
 	String Battle_order;
 	
 	public String getMsg() {

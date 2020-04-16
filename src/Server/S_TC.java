@@ -66,6 +66,7 @@ public class S_TC extends Thread {
 		}).start();
 
 	}
+	
 	public void O_send(TC_Object a) {
 		try {
 			sendMsg2 = withC_Object.getOutputStream();
