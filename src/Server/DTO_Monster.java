@@ -4,7 +4,7 @@ public class DTO_Monster {
 	private String id;
 	private String origin;
 	private String nickname;
-	private String Lv;
+	private int Lv;
 	
 	public String getId() {
 		return id;
@@ -24,10 +24,10 @@ public class DTO_Monster {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getLv() {
+	public int getLv() {
 		return Lv;
 	}
-	public void setLv(String lv) {
+	public void setLv(int lv) {
 		Lv = lv;
 	}
 	

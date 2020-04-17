@@ -48,7 +48,7 @@ public class DAO_Monster implements DAO_Interface{
 				pst.setString(1, DTO_MS.getId());
 				pst.setString(2, DTO_MS.getNickname());
 				pst.setString(3, DTO_MS.getOrigin());
-				pst.setString(4, DTO_MS.getLv());
+				pst.setInt(4, DTO_MS.getLv());
 				
 				int r = pst.executeUpdate();
 				
@@ -90,7 +90,7 @@ public class DAO_Monster implements DAO_Interface{
 						m.setId(rs.getString("id"));
 						m.setOrigin(rs.getString("origin"));
 						m.setNickname(rs.getString("nickname"));
-						m.setLv(rs.getString("lv"));
+						m.setLv(rs.getInt("lv"));
 						MList.add(m);
 					}
 				}

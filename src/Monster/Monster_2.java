@@ -1,23 +1,37 @@
 package Monster;
 
 public class Monster_2 {
-	String originName = "꼬부기";
-	String nickName;
-	int Lv;
-	int attack;
-	int armor;
-	int totalP = 20;
+	private String originName = "꼬부기";
+	private int Lv;
+	private int attack;
+	private int armor;
+	private int totalP;
 	
-	Monster_2(String nickName,int Lv){
-		this.nickName = nickName;
-		this.Lv = Lv;
-		initset();
+	public Monster_2(){
 	}
 
-	private void initset() {
+	public void initset(int Lv) {
+		this.Lv = Lv;
 		attack = (Lv*1);
 		armor = (Lv*2);
 		totalP = 20 + (Lv*1);
 		
 	}
+	
+	public int getTotalP() {
+		return totalP;
+	}
+	
+	public String getOriginName() {
+		return originName;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public int getArmor() {
+		return armor;
+	}
+	
 }

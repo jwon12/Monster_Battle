@@ -50,7 +50,7 @@ public class S_Analysis_Join {
 		
 		ST = new StringTokenizer(m1,"/");
 		DTO_Monster d = new DTO_Monster();
-		d.setId(id); d.setOrigin(ST.nextToken()); d.setNickname(ST.nextToken()); d.setLv("1");
+		d.setId(id); d.setOrigin(ST.nextToken()); d.setNickname(ST.nextToken()); d.setLv(1);
 		if(DAO_MS.insert(d)) {
 			ck = true;
 		}else {
@@ -59,7 +59,7 @@ public class S_Analysis_Join {
 		}
 		ST = new StringTokenizer(m2,"/");
 		d = new DTO_Monster();
-		d.setId(id); d.setOrigin(ST.nextToken()); d.setNickname(ST.nextToken()); d.setLv("1");
+		d.setId(id); d.setOrigin(ST.nextToken()); d.setNickname(ST.nextToken()); d.setLv(1);
 		if(DAO_MS.insert(d)) {
 			ck = true;
 		}else {
@@ -70,7 +70,7 @@ public class S_Analysis_Join {
 		
 		ST = new StringTokenizer(m3,"/");
 		d = new DTO_Monster();
-		d.setId(id); d.setOrigin(ST.nextToken()); d.setNickname(ST.nextToken()); d.setLv("1");
+		d.setId(id); d.setOrigin(ST.nextToken()); d.setNickname(ST.nextToken()); d.setLv(1);
 		if(DAO_MS.insert(d)) {
 			ck = true;
 		}else {

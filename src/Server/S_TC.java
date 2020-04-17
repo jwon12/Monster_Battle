@@ -39,10 +39,6 @@ public class S_TC extends Thread {
 	@Override
 	public void run() {
 		recive();
-		TC_Object a = new TC_Object();
-		a.Battle_msg = "하하하";
-//		O_send(a);
-
 	}
 
 	private void O_recive() {
@@ -99,6 +95,8 @@ public class S_TC extends Thread {
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
+						endCat();
+						break;
 					}
 
 				}
