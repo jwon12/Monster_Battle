@@ -1,0 +1,28 @@
+Member
+
+create table member(
+id varchar2(10) primary key,
+ps varchar2(4) not null,
+nickname varchar2(6) not null
+);
+
+Monster
+
+create table monster(
+id varchar2(10),
+nickname varchar2(20) not null,
+origin varchar2(20) not null,
+lv number(4,2) not null,
+foreign key(id)
+references member(id) on delete cascade
+);
+
+BattleList
+
+create table Battlelist(
+id varchar2(10),
+result number(1) not null,
+opponent varchar2(10),
+foreign key(id)
+references member(id) on delete cascade
+);
