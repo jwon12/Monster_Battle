@@ -1,5 +1,7 @@
 package Client;
 
+import Server.TC_Object;
+
 public class C_Analysis {
 
 	public static C_Analysis mySin = null;
@@ -11,6 +13,7 @@ public class C_Analysis {
 	private Frame_Room F_Room = null;
 	private Frame_Join F_Join = null;
 	private Frame_Battle F_Battle = null;
+	private String id;
 	
 	
 	Frame_Battle_applyRecive F_recive= null;
@@ -31,6 +34,7 @@ public class C_Analysis {
 		}
 		return mySin;
 	}
+
 
 	public void reMsg(C_TC Sin, String msg) {
 		int index = 0;
@@ -64,6 +68,25 @@ public class C_Analysis {
 		}
 
 	}
+	public void reObject(C_TC mysin,TC_Object object) {
+		Frame_Battle F_Battle = null;
+		if(F_send != null) {
+			F_send.Frame_close();
+			F_send = null;
+		}
+		if(object.getPlayer1_id().equals(this.id)) {
+			String opponentID = object.getPlayer2_id();
+			F_Battle = new Frame_Battle(mysin,this.id, opponentID);
+			setFrame_battle(F_Battle);
+		}else {
+			String opponentID = object.getPlayer1_id();
+			F_Battle = new Frame_Battle(mysin,this.id, opponentID);
+			setFrame_battle(F_Battle);
+		}
+		F_Battle.Startsetting(object);
+		
+	}
+	
 	public Frame_Room getFrame_Room() {
 		return F_Room;
 	}
@@ -98,6 +121,15 @@ public class C_Analysis {
 	public Frame_Battle_applySend getF_send() {
 		return F_send;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	
 	
 }

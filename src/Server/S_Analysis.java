@@ -12,7 +12,7 @@ public class S_Analysis {
 	S_Analysis_Join A_Join = null;
 	ArrayList<S_TC> TCList = new ArrayList<>();
 	ArrayList<String> chatList = new ArrayList<>();
-	ArrayList<String> idList = new ArrayList<>();
+	ArrayList<String> idList = new ArrayList<>();;
 
 	private S_Analysis() {
 		A_Login = new S_Analysis_Login();
@@ -58,7 +58,7 @@ public class S_Analysis {
 					for (S_TC s : TCList) {
 						s.send("/room addmember " + id);
 						try {
-							Thread.sleep(500);
+							Thread.sleep(700);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

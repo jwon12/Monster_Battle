@@ -13,7 +13,9 @@ public class TC_Object implements Serializable {
 	private int player1_Monster_Lv;
 	private int player1_Monster_totalP;
 	private int player1_Monster_nowP;
+	private String player1_Monster_img;
 	private String[] player1_Monster_Skill;
+	
 	// palyer2 몬스터
 	private String player2_id;
 
@@ -22,16 +24,15 @@ public class TC_Object implements Serializable {
 	private int player2_Monster_Lv;
 	private int player2_Monster_totalP;
 	private int player2_Monster_nowP;
+	private String player2_Monster_img;
 	private String[] player2_Monster_Skill;
 
 	
-	private String Battle_msg;
+	private String player1_msg;
+	private String player2_msg;
 	
 	private String Battle_order;
 	
-	public String getMsg() {
-		return Battle_msg;
-	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -109,17 +110,47 @@ public class TC_Object implements Serializable {
 	public void setPlayer2_Monster_nowP(int player2_Monster_nowP) {
 		this.player2_Monster_nowP = player2_Monster_nowP;
 	}
-	public String getBattle_msg() {
-		return Battle_msg;
-	}
-	public void setBattle_msg(String battle_msg) {
-		Battle_msg = battle_msg;
-	}
 	public String getBattle_order() {
 		return Battle_order;
 	}
 	public void setBattle_order(String battle_order) {
 		Battle_order = battle_order;
+	}
+	public String getPlayer1_Monster_img() {
+		return player1_Monster_img;
+	}
+	public void setPlayer1_Monster_img(String player1_Monster_img) {
+		this.player1_Monster_img = player1_Monster_img;
+	}
+	public String[] getPlayer1_Monster_Skill() {
+		return player1_Monster_Skill;
+	}
+	public void setPlayer1_Monster_Skill(String[] player1_Monster_Skill) {
+		this.player1_Monster_Skill = player1_Monster_Skill;
+	}
+	public String getPlayer2_Monster_img() {
+		return player2_Monster_img;
+	}
+	public void setPlayer2_Monster_img(String player2_Monster_img) {
+		this.player2_Monster_img = player2_Monster_img;
+	}
+	public String[] getPlayer2_Monster_Skill() {
+		return player2_Monster_Skill;
+	}
+	public void setPlayer2_Monster_Skill(String[] player2_Monster_Skill) {
+		this.player2_Monster_Skill = player2_Monster_Skill;
+	}
+	public String getPlayer1_msg() {
+		return player1_msg;
+	}
+	public void setPlayer1_msg(String player1_msg) {
+		this.player1_msg = player1_msg;
+	}
+	public String getPlayer2_msg() {
+		return player2_msg;
+	}
+	public void setPlayer2_msg(String player2_msg) {
+		this.player2_msg = player2_msg;
 	}
 	
 	

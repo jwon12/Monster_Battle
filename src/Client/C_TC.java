@@ -44,7 +44,7 @@ public class C_TC {
 						reMsg2 = withObjectServer.getInputStream();
 						reObject = new ObjectInputStream(reMsg2);
 						TC_Object Object = (TC_Object) reObject.readObject();
-						//System.out.println(S_Object.getMsg());
+						Analysis.reObject(mySin,Object);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

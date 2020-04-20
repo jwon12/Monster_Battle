@@ -57,11 +57,11 @@ public class C_Analysis_Battle {
 		
 		if(sendID.equals(myID)) {
 			String opponentID = reID;
-			Frame_Battle F_Battle = new Frame_Battle(myID, opponentID);
+			Frame_Battle F_Battle = new Frame_Battle(myTC,myID, opponentID);
 			a.setFrame_battle(F_Battle);
 		}else {
 			String opponentID = sendID;
-			Frame_Battle F_Battle = new Frame_Battle(myID, opponentID);
+			Frame_Battle F_Battle = new Frame_Battle(myTC,myID, opponentID);
 			a.setFrame_battle(F_Battle);
 		}
 		

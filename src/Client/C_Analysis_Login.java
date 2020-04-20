@@ -13,8 +13,10 @@ public class C_Analysis_Login {
 		StringTokenizer ST = new StringTokenizer(msg," ");
 		String booleanCK = ST.nextToken();
 		if(booleanCK.equals("true")) {
+			C_Analysis a = C_Analysis.getInstance();			
 			String id = ST.nextToken();
 			String nickName = ST.nextToken();
+			a.setId(id);
 			F_Login_Sin.showPopup("로그인 되었습니다.");
 			F_Login_Sin.createRoom(id,nickName);
 		}else {

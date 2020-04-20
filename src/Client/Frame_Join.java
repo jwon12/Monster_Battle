@@ -84,7 +84,7 @@ public class Frame_Join extends JFrame {
 		contentPane.add(NickTextField);
 		NickTextField.setColumns(10);
 
-		String[] MonsterList = { "파이리", "꼬부기", "이상해씨" };
+		String[] MonsterList = { "이상해씨", "꼬부기", "닥트리오" };
 
 		comboBox = new JComboBox<String>(MonsterList);
 		comboBox.setBounds(12, 209, 84, 23);
@@ -133,8 +133,12 @@ public class Frame_Join extends JFrame {
 				} else if (idTextField.getText().equals("") || pwTextField.getText().equals("")
 						|| NickTextField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "필수 칸을 채워주세요.");
-				} else {
-					ServerSend();
+				} else if(comboBox.getSelectedItem().equals(comboBox_1.getSelectedItem()) || 
+						comboBox.getSelectedItem().equals(comboBox_2.getSelectedItem()) ||
+						comboBox_1.getSelectedItem().equals(comboBox_2.getSelectedItem())){
+					JOptionPane.showMessageDialog(null, "동일 한 몬스터는 선택할수 없습니다.");
+				}else {
+					ServerSend();					
 				}
 
 			}

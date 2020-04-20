@@ -1,12 +1,12 @@
 package Monster;
 
-public class Monster_3 {
-	private String originName = "이상해씨";
+public class Monster_3 extends Monster{
+	private String originName = "닥트리오";
 	private int Lv;
 	private int attack;
 	private int armor;
 	private int totalP;
-
+	private String img = "D:\\java_src\\Monster_Battle_ver0.0\\monster_img\\monster3.JPG";
 	public Monster_3() {
 
 	}
@@ -33,5 +33,7 @@ public class Monster_3 {
 	public int getArmor() {
 		return armor;
 	}
-	
+	public String getImg() {
+		return img;
+	}
 }
