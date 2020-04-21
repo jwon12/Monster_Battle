@@ -92,23 +92,66 @@ public class S_Analysis_Battle {
 				int count = player1_M_attack - player2_M_armor;
 				if(count > 0) {
 					nowBattle.player2_Monster_nowP[player2_M_number] = nowBattle.player2_Monster_nowP[player2_M_number] - count;
-					nowBattle.player2_msg = nowBattle.now_player1_Monster_NickName+"에게 "+String.valueOf(count)+" 만큼의 데미지를 받았습니다.";
-					nowBattle.player1_msg = nowBattle.now_player2_Monster_NickName+"에게 "+String.valueOf(count)+" 만큼의 데미지를 줬습니다.";
+					nowBattle.player2_msg = nowBattle.now_player1_Monster_NickName+" 에게 \n"+"공격 "+String.valueOf(count)+" 만큼의 데미지를 받았습니다.";
+					nowBattle.player1_msg = nowBattle.now_player2_Monster_NickName+" 에게 \n"+"공격 "+String.valueOf(count)+" 만큼의 데미지를 줬습니다.";
 					nowBattle.order = reID;
 				}else {
 					nowBattle.player2_Monster_nowP[player2_M_number] = nowBattle.player2_Monster_nowP[player2_M_number] - 1;
-					nowBattle.player2_msg = nowBattle.now_player1_Monster_NickName+"에게 "+String.valueOf(1)+" 만큼의 데미지를 받았습니다.";
-					nowBattle.player1_msg = nowBattle.now_player2_Monster_NickName+"에게 "+String.valueOf(1)+" 만큼의 데미지를 줬습니다.";
+					nowBattle.player2_msg = nowBattle.now_player1_Monster_NickName+" 에게 \n"+"공격 "+String.valueOf(1)+" 만큼의 데미지를 받았습니다.";
+					nowBattle.player1_msg = nowBattle.now_player2_Monster_NickName+" 에게 \n"+"공격 "+String.valueOf(1)+" 만큼의 데미지를 줬습니다.";
 					nowBattle.order = reID;
 				}
-				
 			}else {
+				//플레이어2가 공격 한경우
 				
+				int player1_M_number = 0;
+				int player2_M_number = 0;
+				for(int i = 0; i < nowBattle.now_player1_Monster_OriginName.length(); i++) {
+					if(nowBattle.player1_Monster_OriginName[i].equals(nowBattle.now_player1_Monster_OriginName)) {
+						player1_M_number = i;
+						break;
+					}
+				}
+				for(int i = 0; i < nowBattle.now_player2_Monster_OriginName.length(); i++) {
+					if(nowBattle.player2_Monster_OriginName[i].equals(nowBattle.now_player2_Monster_OriginName)) {
+						player2_M_number = i;
+						break;
+					}
+				}
+				int player2_M_attack = nowBattle.player2_Monster_attack[player2_M_number];
+				int player1_M_armor = nowBattle.player1_Monster_armor[player1_M_number];
+				int count = player2_M_attack - player1_M_armor;
+				if(count > 0) {
+					nowBattle.player1_Monster_nowP[player1_M_number] = nowBattle.player1_Monster_nowP[player1_M_number] - count;
+					nowBattle.player1_msg = nowBattle.now_player2_Monster_NickName+" 에게 \n"+"공격 "+String.valueOf(count)+" 만큼의 데미지를 받았습니다.";
+					nowBattle.player2_msg = nowBattle.now_player1_Monster_NickName+" 에게 \n"+"공격 "+String.valueOf(count)+" 만큼의 데미지를 줬습니다.";
+					nowBattle.order = reID;
+				}else {
+					nowBattle.player1_Monster_nowP[player2_M_number] = nowBattle.player1_Monster_nowP[player2_M_number] - 1;
+					nowBattle.player1_msg = nowBattle.now_player2_Monster_NickName+" 에게 \n"+"공격 "+String.valueOf(1)+" 만큼의 데미지를 받았습니다.";
+					nowBattle.player2_msg = nowBattle.now_player1_Monster_NickName+" 에게 \n"+"공격 "+String.valueOf(1)+" 만큼의 데미지를 줬습니다.";
+					nowBattle.order = reID;
+				}
 			}
 		}else {
+			if(nowBattle.player1_id.equals(attackID)) {
+				nowBattle.order = reID;
+				nowBattle.player1_msg = nowBattle.now_player1_Monster_NickName+" 가 \n공격에 실패하였습니다.";
+				nowBattle.player2_msg = nowBattle.now_player1_Monster_NickName+" 가 \n공격에 실패하였습니다.";
+			}else {
+				nowBattle.order = reID;
+				nowBattle.player1_msg = nowBattle.now_player2_Monster_NickName+" 가 \n공격에 실패하였습니다.";
+				nowBattle.player2_msg = nowBattle.now_player2_Monster_NickName+" 가 \n공격에 실패하였습니다.";
+			}
 			
 		}
-		
+		TC_Object object = TC_ObjectSet(nowBattle);
+		ArrayList<S_TC> TCList = s.getTCList();
+		for(S_TC s :TCList) {
+			if(s.getID().equals(attackID) || s.getID().equals(reID)) {
+				s.O_send(object);
+			}
+		}
 	}
 	private void applyfalse(String tail) {
 		int index = 0;
@@ -187,6 +230,8 @@ public class S_Analysis_Battle {
 		}
 		
 		object.setBattle_order(battle.order);
+		object.setPlayer1_msg(battle.player1_msg);
+		object.setPlayer2_msg(battle.player2_msg);
 		
 		return object;
 	}

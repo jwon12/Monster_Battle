@@ -7,6 +7,7 @@ public class Monster_1 extends Monster{
 	private int armor;
 	private int totalP;
 	private String img = "D:\\java_src\\Monster_Battle_ver0.0\\monster_img\\monster1.JPG";
+	
 	public Monster_1(){
 		
 	}

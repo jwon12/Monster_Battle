@@ -69,21 +69,29 @@ public class C_Analysis {
 
 	}
 	public void reObject(C_TC mysin,TC_Object object) {
-		Frame_Battle F_Battle = null;
-		if(F_send != null) {
-			F_send.Frame_close();
-			F_send = null;
-		}
-		if(object.getPlayer1_id().equals(this.id)) {
-			String opponentID = object.getPlayer2_id();
-			F_Battle = new Frame_Battle(mysin,this.id, opponentID);
-			setFrame_battle(F_Battle);
+		if(F_Battle == null) {			
+			if(F_send != null) {
+				F_send.Frame_close();
+				F_send = null;
+			}
+			if(object.getPlayer1_id().equals(this.id)) {
+				String opponentID = object.getPlayer2_id();
+				F_Battle = new Frame_Battle(mysin,this.id, opponentID);
+				setFrame_battle(F_Battle);
+			}else {
+				String opponentID = object.getPlayer1_id();
+				F_Battle = new Frame_Battle(mysin,this.id, opponentID);
+				setFrame_battle(F_Battle);
+			}
+			F_Battle.Startsetting(object);
 		}else {
-			String opponentID = object.getPlayer1_id();
-			F_Battle = new Frame_Battle(mysin,this.id, opponentID);
-			setFrame_battle(F_Battle);
+			String player1 = object.getPlayer1_id();
+			if(player1.equals(this.id)) {
+				F_Battle.player1Setting(object);
+			}else {
+				F_Battle.player2Setting(object);
+			}
 		}
-		F_Battle.Startsetting(object);
 		
 	}
 	

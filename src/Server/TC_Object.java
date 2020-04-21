@@ -5,9 +5,24 @@ import java.io.Serializable;
 import javax.crypto.SecretKey;
 
 public class TC_Object implements Serializable {
-	// palyer1 몬스터
 	private String player1_id;
+	private String player2_id;
 	
+	// palyer1 전체 몬스터
+	private String[] player1_Monster_OriginName_All = new String[3];
+	private String[] player1_Monster_NickName_All = new String[3];
+	private int[] player1_Monster_Lv_All = new int[3];
+	private int[] player1_Monster_totalP_All = new int[3];
+	private int[] player1_Monster_nowP_All = new int[3];
+	
+	// palyer2 전체 몬스터
+	private String[] player2_Monster_OriginName_All = new String[3];
+	private String[] player2_Monster_NickName_All = new String[3];
+	private int[] player2_Monster_Lv_All = new int[3];
+	private int[] player2_Monster_totalP_All = new int[3];
+	private int[] player2_Monster_nowP_All = new int[3];
+	
+	// palyer1 현재 전투중인 몬스터
 	private String player1_Monster_OriginName;
 	private String player1_Monster_NiceName;
 	private int player1_Monster_Lv;
@@ -16,9 +31,7 @@ public class TC_Object implements Serializable {
 	private String player1_Monster_img;
 	private String[] player1_Monster_Skill;
 	
-	// palyer2 몬스터
-	private String player2_id;
-
+	// palyer2 현재 전투중인 몬스터
 	private String player2_Monster_OriginName;
 	private String player2_Monster_NiceName;
 	private int player2_Monster_Lv;
@@ -38,6 +51,108 @@ public class TC_Object implements Serializable {
 		// TODO Auto-generated method stub
 		return super.toString();
 	}
+	
+	
+	public String[] getPlayer1_Monster_OriginName_All() {
+		return player1_Monster_OriginName_All;
+	}
+
+
+	public void setPlayer1_Monster_OriginName_All(String[] player1_Monster_OriginName_All) {
+		this.player1_Monster_OriginName_All = player1_Monster_OriginName_All;
+	}
+
+
+	public String[] getPlayer1_Monster_NickName_All() {
+		return player1_Monster_NickName_All;
+	}
+
+
+	public void setPlayer1_Monster_NickName_All(String[] player1_Monster_NickName_All) {
+		this.player1_Monster_NickName_All = player1_Monster_NickName_All;
+	}
+
+
+	public int[] getPlayer1_Monster_Lv_All() {
+		return player1_Monster_Lv_All;
+	}
+
+
+	public void setPlayer1_Monster_Lv_All(int[] player1_Monster_Lv_All) {
+		this.player1_Monster_Lv_All = player1_Monster_Lv_All;
+	}
+
+
+	public int[] getPlayer1_Monster_totalP_All() {
+		return player1_Monster_totalP_All;
+	}
+
+
+	public void setPlayer1_Monster_totalP_All(int[] player1_Monster_totalP_All) {
+		this.player1_Monster_totalP_All = player1_Monster_totalP_All;
+	}
+
+
+	public int[] getPlayer1_Monster_nowP_All() {
+		return player1_Monster_nowP_All;
+	}
+
+
+	public void setPlayer1_Monster_nowP_All(int[] player1_Monster_nowP_All) {
+		this.player1_Monster_nowP_All = player1_Monster_nowP_All;
+	}
+
+
+	public String[] getPlayer2_Monster_OriginName_All() {
+		return player2_Monster_OriginName_All;
+	}
+
+
+	public void setPlayer2_Monster_OriginName_All(String[] player2_Monster_OriginName_All) {
+		this.player2_Monster_OriginName_All = player2_Monster_OriginName_All;
+	}
+
+
+	public String[] getPlayer2_Monster_NickName_All() {
+		return player2_Monster_NickName_All;
+	}
+
+
+	public void setPlayer2_Monster_NickName_All(String[] player2_Monster_NickName_All) {
+		this.player2_Monster_NickName_All = player2_Monster_NickName_All;
+	}
+
+
+	public int[] getPlayer2_Monster_Lv_All() {
+		return player2_Monster_Lv_All;
+	}
+
+
+	public void setPlayer2_Monster_Lv_All(int[] player2_Monster_Lv_All) {
+		this.player2_Monster_Lv_All = player2_Monster_Lv_All;
+	}
+
+
+	public int[] getPlayer2_Monster_totalP_All() {
+		return player2_Monster_totalP_All;
+	}
+
+
+	public void setPlayer2_Monster_totalP_All(int[] player2_Monster_totalP_All) {
+		this.player2_Monster_totalP_All = player2_Monster_totalP_All;
+	}
+
+
+	public int[] getPlayer2_Monster_nowP_All() {
+		return player2_Monster_nowP_All;
+	}
+
+
+	public void setPlayer2_Monster_nowP_All(int[] player2_Monster_nowP_All) {
+		this.player2_Monster_nowP_All = player2_Monster_nowP_All;
+	}
+
+
 	public String getPlayer1_id() {
 		return player1_id;
 	}

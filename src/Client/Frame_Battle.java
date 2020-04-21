@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -29,6 +30,7 @@ public class Frame_Battle extends JFrame {
 	private JButton attack_btn,skill_btn,monsterChange_Btn,giveUp_btn;
 	private String myID, opponentID;
 	private C_TC myTCsin = null;
+	private JTextArea msgTextArea;
 
 	Frame_Battle(C_TC sin,String myID ,String opponentID) {
 		this.myTCsin = sin;
@@ -47,16 +49,14 @@ public class Frame_Battle extends JFrame {
 		contentPane.setLayout(null);
 
 		Status_panel = new JPanel();
-		Status_panel.setBackground(new Color(230, 230, 250));
+//		Status_panel.setBackground(new Color(230, 230, 250));
 		Status_panel.setBounds(12, 267, 254, 128);
 		contentPane.add(Status_panel);
 		Status_panel.setLayout(null);
-
-		JLabel msg_label = new JLabel("대기중..");
-		msg_label.setHorizontalAlignment(SwingConstants.CENTER);
-		msg_label.setFont(new Font("굴림", Font.BOLD, 16));
-		msg_label.setBounds(12, 46, 230, 30);
-		Status_panel.add(msg_label);
+		
+		msgTextArea = new JTextArea();
+		msgTextArea.setBounds(12, 46, 230, 30);
+		Status_panel.add(msgTextArea);
 		
 		
 		attack_btn = new JButton("공격");
@@ -197,7 +197,7 @@ public class Frame_Battle extends JFrame {
 		}
 	}
 
-	private void player2Setting(TC_Object o) {
+	public void player2Setting(TC_Object o) {
 		// player2이 나자신일 경우
 		// 몬스터 이미지 세팅
 		String my_Img = o.getPlayer2_Monster_img();
@@ -231,8 +231,9 @@ public class Frame_Battle extends JFrame {
 		int my_nowM_nowP = o.getPlayer2_Monster_nowP();
 		my_M_nowP.setText(String.valueOf(my_nowM_nowP));
 
-		float s = (my_nowM_nowP / my_nowM_totalP);
-		int nowP_bar = (int) (230 * s);
+		float s = ((float)my_nowM_nowP / (float)my_nowM_totalP);
+		int nowP_bar = (int) ((float)230 * s);
+		System.out.println(nowP_bar);
 		my_M_nowP_bar.setBounds(0, 0, nowP_bar, 20);
 
 		// 상대 몬스터
@@ -244,16 +245,33 @@ public class Frame_Battle extends JFrame {
 
 		int opponent_nowP = o.getPlayer1_Monster_nowP();
 		opponent_M_nowP.setText(String.valueOf(opponent_nowP));
-
-		s = (opponent_nowP / opponent_totalP);
-		nowP_bar = (int) (230 * s);
+		
+		s = ((float)opponent_nowP / (float)opponent_totalP);
+		nowP_bar = (int)((float)230 * s);
+		
 
 		opponent_M_nowP_bar.setBounds(0, 0, nowP_bar, 20);
+		
+		String Server_msg = o.getPlayer2_msg();
+		msgTextArea.setText(Server_msg);
+		String order = o.getBattle_order();
+		if(order.equals(myID)) {
+			attack_btn.setEnabled(true);
+			skill_btn.setEnabled(true);
+			monsterChange_Btn.setEnabled(true);
+			giveUp_btn.setEnabled(true);
+		}else {
+			attack_btn.setEnabled(false);
+			skill_btn.setEnabled(false);
+			monsterChange_Btn.setEnabled(false);
+			giveUp_btn.setEnabled(false);
+		}
+		
 		
 		this.setVisible(true);
 	}
 
-	private void player1Setting(TC_Object o) {
+	public void player1Setting(TC_Object o) {
 		// player1 이 나자신일 경우
 
 		// 몬스터 이미지 세팅
@@ -288,8 +306,8 @@ public class Frame_Battle extends JFrame {
 		int my_nowM_nowP = o.getPlayer1_Monster_nowP();
 		my_M_nowP.setText(String.valueOf(my_nowM_nowP));
 
-		float s = (my_nowM_nowP / my_nowM_totalP);
-		int nowP_bar = (int) (230 * s);
+		float s = ((float)my_nowM_nowP / (float)my_nowM_totalP);
+		int nowP_bar = (int) ((float)230 * s);
 		my_M_nowP_bar.setBounds(0, 0, nowP_bar, 20);
 
 		// 상대 몬스터
@@ -302,12 +320,13 @@ public class Frame_Battle extends JFrame {
 		int opponent_nowP = o.getPlayer2_Monster_nowP();
 		opponent_M_nowP.setText(String.valueOf(opponent_nowP));
 
-		s = (opponent_nowP / opponent_totalP);
-		nowP_bar = (int) (230 * s);
+		s = ((float)opponent_nowP / (float)opponent_totalP);
+		nowP_bar = (int)((float)230 * s);
 
 		opponent_M_nowP_bar.setBounds(0, 0, nowP_bar, 20);
+		String Server_msg = o.getPlayer1_msg();
+		msgTextArea.setText(Server_msg);
 		String order = o.getBattle_order();
-		//setEnabled(false);
 		if(order.equals(myID)) {
 			attack_btn.setEnabled(true);
 			skill_btn.setEnabled(true);

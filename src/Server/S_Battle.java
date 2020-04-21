@@ -19,7 +19,6 @@ public class S_Battle {
 	int[] player1_Monster_attack = new int[3];
 	int[] player1_Monster_armor = new int[3];
 	String[] player1_Monster_img = new String[3];
-	String player1_msg;
 
 	// palyer2 몬스터
 	String player2_id;
@@ -32,6 +31,8 @@ public class S_Battle {
 	int[] player2_Monster_attack = new int[3];
 	int[] player2_Monster_armor = new int[3];
 	String[] player2_Monster_img = new String[3];
+	
+	String player1_msg;
 	String player2_msg;
 	
 	String order;
@@ -50,13 +51,13 @@ public class S_Battle {
 		int s = r.nextInt(2);
 		if (s == 0) {
 			order = this.player1_id;
-			player1_msg = this.player1_id+"공격할 차례입니다.";
-			player2_msg = this.player1_id+"공격할 차레입니다.";
+			player1_msg = "배틀 START \n"+this.player1_id+" 님이 공격할 차례입니다.";
+			player2_msg = "배틀 START \n"+this.player1_id+" 님이 공격할 차례입니다.";
 			
 		}else {
 			order = this.player2_id;
-			player1_msg = this.player2_id+"공격할 차레입니다.";
-			player2_msg = this.player2_id+"공격할 차레입니다.";
+			player1_msg = "배틀 START \n"+this.player2_id+" 님이 공격할 차례입니다.";
+			player2_msg = "배틀 START \n"+this.player2_id+" 님이 공격할 차레입니다.";
 			
 		}
 	}
