@@ -5,6 +5,7 @@ import java.net.Socket;
 
 
 public class C_Main {
+	//띠영
 	
 	Socket withServer = null;
 	Socket withObjectServer = null;
