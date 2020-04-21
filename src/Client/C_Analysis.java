@@ -13,6 +13,7 @@ public class C_Analysis {
 	private Frame_Room F_Room = null;
 	private Frame_Join F_Join = null;
 	private Frame_Battle F_Battle = null;
+	private C_TC C_TC_mySin = null;
 	private String id;
 	
 	
@@ -20,6 +21,8 @@ public class C_Analysis {
 	Frame_Battle_applySend F_send = null;
 	
 	
+	
+
 	private C_Analysis() {
 		A_Login = new C_Analysis_Login();
 		A_Join = new C_Analysis_Join();
@@ -37,6 +40,7 @@ public class C_Analysis {
 
 
 	public void reMsg(C_TC Sin, String msg) {
+		this.C_TC_mySin = Sin;
 		int index = 0;
 
 		for (int i = 0; i < msg.length(); i++) {
@@ -137,7 +141,9 @@ public class C_Analysis {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	public C_TC getC_TC_mySin() {
+		return C_TC_mySin;
+	}
 	
 	
 }

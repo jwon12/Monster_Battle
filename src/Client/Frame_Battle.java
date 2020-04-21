@@ -31,6 +31,8 @@ public class Frame_Battle extends JFrame {
 	private String myID, opponentID;
 	private C_TC myTCsin = null;
 	private JTextArea msgTextArea;
+	private Frame_Battle_change F_change = null;
+	private TC_Object Battle_object = null;
 
 	Frame_Battle(C_TC sin,String myID ,String opponentID) {
 		this.myTCsin = sin;
@@ -41,6 +43,7 @@ public class Frame_Battle extends JFrame {
 
 	public void Startsetting(TC_Object o) {
 		
+		this.Battle_object = o;
 		setBounds(100, 100, 541, 443);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.LIGHT_GRAY);
@@ -66,7 +69,7 @@ public class Frame_Battle extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				myTCsin.send("/battle In_battle attack "+myID+" "+opponentID);
-				
+				System.out.println("attack///"+myID+"////"+opponentID+"//");
 			}
 		});
 		contentPane.add(attack_btn);
@@ -83,13 +86,13 @@ public class Frame_Battle extends JFrame {
 		});
 		contentPane.add(skill_btn);
 
-		monsterChange_Btn = new JButton("바꾸기");
+		monsterChange_Btn = new JButton("교체");
 		monsterChange_Btn.setBounds(292, 359, 97, 23);
 		monsterChange_Btn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				change();
 				
 			}
 		});
@@ -147,19 +150,19 @@ public class Frame_Battle extends JFrame {
 		opponent_M_nowP_bar.setBounds(0, 0, 230, 20);
 		opponent_M_totalP_bar.add(opponent_M_nowP_bar);
 
-		opponent_M_Name = new JLabel("파이리/파이리");
+		opponent_M_Name = new JLabel();
 		opponent_M_Name.setBounds(12, 32, 99, 15);
 		Battle_panel.add(opponent_M_Name);
 
-		opponent_Lv = new JLabel("Lv.1");
+		opponent_Lv = new JLabel();
 		opponent_Lv.setBounds(209, 32, 33, 15);
 		Battle_panel.add(opponent_Lv);
 
-		opponent_M_totalP = new JLabel("/ 100");
+		opponent_M_totalP = new JLabel();
 		opponent_M_totalP.setBounds(209, 74, 33, 21);
 		Battle_panel.add(opponent_M_totalP);
 
-		opponent_M_nowP = new JLabel("90");
+		opponent_M_nowP = new JLabel();
 		opponent_M_nowP.setBounds(184, 77, 23, 15);
 		Battle_panel.add(opponent_M_nowP);
 
@@ -174,19 +177,19 @@ public class Frame_Battle extends JFrame {
 		my_M_nowP_bar.setBounds(0, 0, 230, 20);
 		my_M_tatalP_bar.add(my_M_nowP_bar);
 
-		my_M_Lv = new JLabel("Lv.1");
+		my_M_Lv = new JLabel();
 		my_M_Lv.setBounds(456, 154, 33, 15);
 		Battle_panel.add(my_M_Lv);
 
-		my_M_Name = new JLabel("파이리/파이리");
+		my_M_Name = new JLabel();
 		my_M_Name.setBounds(259, 154, 99, 15);
 		Battle_panel.add(my_M_Name);
 
-		my_M_nowP = new JLabel("90");
+		my_M_nowP = new JLabel();
 		my_M_nowP.setBounds(431, 199, 23, 15);
 		Battle_panel.add(my_M_nowP);
 
-		my_M_totalP = new JLabel("/ 100");
+		my_M_totalP = new JLabel();
 		my_M_totalP.setBounds(456, 196, 33, 21);
 		Battle_panel.add(my_M_totalP);
 
@@ -197,7 +200,14 @@ public class Frame_Battle extends JFrame {
 		}
 	}
 
+	protected void change() {
+		F_change = new Frame_Battle_change(myID);
+		F_change.setting(Battle_object);
+		
+	}
+
 	public void player2Setting(TC_Object o) {
+		this.Battle_object = o;
 		// player2이 나자신일 경우
 		// 몬스터 이미지 세팅
 		String my_Img = o.getPlayer2_Monster_img();
@@ -272,6 +282,7 @@ public class Frame_Battle extends JFrame {
 	}
 
 	public void player1Setting(TC_Object o) {
+		this.Battle_object = o;
 		// player1 이 나자신일 경우
 
 		// 몬스터 이미지 세팅
