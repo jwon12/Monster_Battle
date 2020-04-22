@@ -80,7 +80,7 @@ public class Frame_Battle extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				skill();
 				
 			}
 		});
@@ -121,7 +121,7 @@ public class Frame_Battle extends JFrame {
 		g2 = new ImageIcon(t2);
 
 		Battle_panel = new JPanel();
-		Battle_panel.setBackground(new Color(255, 228, 225));
+//		Battle_panel.setBackground(new Color(255, 228, 225));
 		Battle_panel.setBounds(12, 10, 501, 247);
 		contentPane.add(Battle_panel);
 		Battle_panel.setLayout(null);
@@ -151,7 +151,8 @@ public class Frame_Battle extends JFrame {
 		opponent_M_totalP_bar.add(opponent_M_nowP_bar);
 
 		opponent_M_Name = new JLabel();
-		opponent_M_Name.setBounds(12, 32, 99, 15);
+		opponent_M_Name.setBounds(12, 32, 120, 15);
+		opponent_M_Name.setHorizontalAlignment(SwingConstants.LEFT);
 		Battle_panel.add(opponent_M_Name);
 
 		opponent_Lv = new JLabel();
@@ -182,7 +183,8 @@ public class Frame_Battle extends JFrame {
 		Battle_panel.add(my_M_Lv);
 
 		my_M_Name = new JLabel();
-		my_M_Name.setBounds(259, 154, 99, 15);
+		my_M_Name.setBounds(259, 154, 120, 15);
+		my_M_Name.setHorizontalAlignment(SwingConstants.LEFT);
 		Battle_panel.add(my_M_Name);
 
 		my_M_nowP = new JLabel();
@@ -198,6 +200,12 @@ public class Frame_Battle extends JFrame {
 		} else if (o.getPlayer2_id().equals(myID)) {
 			player2Setting(o);
 		}
+	}
+
+	protected void skill() {
+		Frame_Battle_Skill F_Skill = new Frame_Battle_Skill(myID,opponentID);
+		F_Skill.setting_skill(Battle_object);
+		
 	}
 
 	protected void change() {
@@ -301,9 +309,9 @@ public class Frame_Battle extends JFrame {
 		opponent_M_ImageIcon.setIcon(g2);
 
 		// 몬스터 이름 세팅
-		String my_MonsterName = o.getPlayer1_Monster_NiceName() + "/" + o.getPlayer1_Monster_OriginName();
+		String my_MonsterName = o.getPlayer1_Monster_NiceName() + " / " + o.getPlayer1_Monster_OriginName();
 		my_M_Name.setText(my_MonsterName);
-		String opponent_MonsterName = o.getPlayer2_Monster_NiceName() + "/" + o.getPlayer2_Monster_OriginName();
+		String opponent_MonsterName = o.getPlayer2_Monster_NiceName() + " / " + o.getPlayer2_Monster_OriginName();
 		opponent_M_Name.setText(opponent_MonsterName);
 
 		// 몬스터 Lv, totalP, nowP 세팅

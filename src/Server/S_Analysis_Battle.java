@@ -53,8 +53,261 @@ public class S_Analysis_Battle {
 		case "change":
 			change(tail);
 			break;
+		case "skill":
+			skill(tail);
+			break;
 		}
 
+	}
+
+	private void skill(String tail) {
+		int blankIndex = get_blankIndex(tail);
+		String skill = tail.substring(0, blankIndex);
+		tail = tail.substring(blankIndex + 1);
+		blankIndex = get_blankIndex(tail);
+		String useID = tail.substring(0, blankIndex);
+		String reID = tail.substring(blankIndex + 1);
+		S_Battle now_Battle = null;
+
+		for (S_Battle b : battleList) {
+			if (b.player1_id.equals(useID) && b.player2_id.equals(reID)
+					|| b.player2_id.equals(useID) && b.player1_id.equals(reID)) {
+				now_Battle = b;
+				break;
+			}
+		}
+		String player1ID = now_Battle.player1_id;
+		String player2ID = now_Battle.player2_id;
+
+		int skill_number = 0;
+
+		switch (skill) {
+		case "skill_1":
+			skill_number = 0;
+			break;
+		case "skill_2":
+			skill_number = 1;
+			break;
+		case "skill_3":
+			skill_number = 2;
+			break;
+		case "skill_4":
+			skill_number = 3;
+			break;
+		}
+
+		if (player1ID.equals(useID)) {
+
+			int skillPercent = Integer.valueOf(now_Battle.now_player1_Monster_Skill[skill_number][1]);
+			String skillName = now_Battle.now_player1_Monster_Skill[skill_number][0];
+			boolean Success_ck = skillRandom(skillPercent);
+
+			if (Success_ck) {
+				int player1_M_number = 0;
+				int player2_M_number = 0;
+				for (int i = 0; i < now_Battle.player1_Monster_OriginName.length; i++) {
+					if (now_Battle.now_player1_Monster_OriginName.equals(now_Battle.player1_Monster_OriginName[i])) {
+						player1_M_number = i;
+						break;
+					}
+				}
+				for (int i = 0; i < now_Battle.player2_Monster_OriginName.length; i++) {
+					if (now_Battle.now_player2_Monster_OriginName.equals(now_Battle.player2_Monster_OriginName[i])) {
+						player2_M_number = i;
+						break;
+					}
+				}
+				int player1_M_attack = now_Battle.player1_Monster_attack[player1_M_number];
+				int player2_M_armor = now_Battle.player2_Monster_armor[player2_M_number];
+				int p1ayer1_M_skill_D = Integer.valueOf(now_Battle.now_player1_Monster_Skill[skill_number][2]);
+				int count = player1_M_attack - player2_M_armor;
+				String player1_Monster_property = now_Battle.player1_Monster_property[player1_M_number];
+				String player2_Monster_property = now_Battle.player2_Monster_property[player2_M_number];
+				int property_D = Monster_property(player1_Monster_property, player2_Monster_property);
+				int Damage = 0;
+				if (property_D > 0) {
+					if (count > 0) {
+						count = count + p1ayer1_M_skill_D;
+						Damage = (count * property_D);
+						now_Battle.player2_Monster_nowP[player2_M_number] = now_Battle.player2_Monster_nowP[player2_M_number]
+								- Damage;
+					} else {
+						Damage = ((1 + p1ayer1_M_skill_D) * property_D);
+						now_Battle.player2_Monster_nowP[player2_M_number] = now_Battle.player2_Monster_nowP[player2_M_number]
+								- Damage;
+					}
+				} else {
+					if (count > 0) {
+						count = count + p1ayer1_M_skill_D;
+						Damage = (int) (((float) count) * ((float) 2));
+						now_Battle.player2_Monster_nowP[player2_M_number] = now_Battle.player2_Monster_nowP[player2_M_number]
+								- Damage;
+					} else {
+						Damage = 1 + p1ayer1_M_skill_D;
+						now_Battle.player2_Monster_nowP[player2_M_number] = now_Battle.player2_Monster_nowP[player2_M_number]
+								- Damage;
+					}
+				}
+				now_Battle.order = reID;
+				now_Battle.player1_msg = now_Battle.now_player1_Monster_NickName + " 가 \n스킬 공격\n" + skillName + " 스킬 \n"
+						+ Damage + " 만큼의 데미지를 줬습니다.";
+				now_Battle.player2_msg = now_Battle.now_player1_Monster_NickName + " 가 \n스킬 공격\n" + skillName + " 스킬 \n"
+						+ Damage + " 만큼의 데미지를 받았습니다.";
+			} else {
+				now_Battle.order = reID;
+				now_Battle.player1_msg = now_Battle.now_player1_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
+				now_Battle.player2_msg = now_Battle.now_player1_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
+
+//					now_Battle.order = reID;
+//					now_Battle.player1_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
+//					now_Battle.player2_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
+//				
+			}
+
+		} else {
+			// 플레이어2가 스킬
+
+			int skillPercent = Integer.valueOf(now_Battle.now_player2_Monster_Skill[skill_number][1]);
+			String skillName = now_Battle.now_player2_Monster_Skill[skill_number][0];
+			boolean Success_ck = skillRandom(skillPercent);
+
+			if (Success_ck) {
+				int player1_M_number = 0;
+				int player2_M_number = 0;
+				for (int i = 0; i < now_Battle.player1_Monster_OriginName.length; i++) {
+					if (now_Battle.now_player1_Monster_OriginName.equals(now_Battle.player1_Monster_OriginName[i])) {
+						player1_M_number = i;
+						break;
+					}
+				}
+				for (int i = 0; i < now_Battle.player2_Monster_OriginName.length; i++) {
+					if (now_Battle.now_player2_Monster_OriginName.equals(now_Battle.player2_Monster_OriginName[i])) {
+						player2_M_number = i;
+						break;
+					}
+				}
+				int player2_M_attack = now_Battle.player2_Monster_attack[player2_M_number];
+				int player1_M_armor = now_Battle.player1_Monster_armor[player1_M_number];
+				int p1ayer2_M_skill_D = Integer.valueOf(now_Battle.now_player2_Monster_Skill[skill_number][2]);
+				int count = player2_M_attack - player1_M_armor;
+				String player1_Monster_property = now_Battle.player1_Monster_property[player1_M_number];
+				String player2_Monster_property = now_Battle.player2_Monster_property[player2_M_number];
+				int property_D = Monster_property(player2_Monster_property, player1_Monster_property);
+				int Damage = 0;
+				if (property_D > 0) {
+					if (count > 0) {
+						count = count + p1ayer2_M_skill_D;
+						Damage = (count * property_D);
+						now_Battle.player1_Monster_nowP[player1_M_number] = now_Battle.player1_Monster_nowP[player1_M_number]
+								- Damage;
+					} else {
+						Damage = ((1 + p1ayer2_M_skill_D) * property_D);
+						now_Battle.player1_Monster_nowP[player1_M_number] = now_Battle.player1_Monster_nowP[player1_M_number]
+								- Damage;
+					}
+				} else {
+					if (count > 0) {
+						count = count + p1ayer2_M_skill_D;
+						Damage = (int) (((float) count) * ((float) 2));
+						now_Battle.player1_Monster_nowP[player1_M_number] = now_Battle.player1_Monster_nowP[player1_M_number]
+								- Damage;
+					} else {
+						Damage = 1 + p1ayer2_M_skill_D;
+						now_Battle.player1_Monster_nowP[player1_M_number] = now_Battle.player1_Monster_nowP[player1_M_number]
+								- Damage;
+					}
+				}
+				now_Battle.order = reID;
+				now_Battle.player1_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격\n" + skillName + " 스킬 \n"
+						+ Damage + " 만큼의 데미지를 줬습니다.";
+				now_Battle.player2_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격\n" + skillName + " 스킬 \n"
+						+ Damage + " 만큼의 데미지를 받았습니다.";
+			} else {
+				now_Battle.order = reID;
+				now_Battle.player1_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
+				now_Battle.player2_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
+
+			}
+		}
+		TC_Object object = TC_ObjectSet(now_Battle);
+		ArrayList<S_TC> TCList = s.getTCList();
+		for (S_TC s : TCList) {
+			if (s.getID().equals(useID) || s.getID().equals(reID)) {
+				s.O_send(object);
+			}
+		}
+	}
+
+	private int Monster_property(String SkillUse_Monster_property, String recive_Monster_property) {
+		int property_D = 0;
+		switch (SkillUse_Monster_property) {
+		case "graff":
+			if (recive_Monster_property.equals("water")) {
+				property_D = 2;
+			} else if (recive_Monster_property.equals("fire")) {
+				property_D = 0;
+			} else {
+				property_D = 1;
+			}
+			break;
+		case "water":
+			if (recive_Monster_property.equals("ground")) {
+				property_D = 2;
+			} else if (recive_Monster_property.equals("graff")) {
+				property_D = 0;
+			} else {
+				property_D = 1;
+			}
+			break;
+		case "fire":
+			if (recive_Monster_property.equals("graff")) {
+				property_D = 2;
+			} else if (recive_Monster_property.equals("ground")) {
+				property_D = 0;
+			} else {
+				property_D = 1;
+			}
+			break;
+		case "ground":
+			if (recive_Monster_property.equals("fire")) {
+				property_D = 2;
+			} else if (recive_Monster_property.equals("water")) {
+				property_D = 0;
+			} else {
+				property_D = 1;
+			}
+			break;
+		}
+		return property_D;
+	}
+
+	private boolean skillRandom(int i) {
+		int Random_number = r.nextInt(10);
+		switch (i) {
+		case 70:
+			if (Random_number == 1 || Random_number == 3 || Random_number == 5) {
+				return false;
+			}
+			return true;
+		case 60:
+			if (Random_number == 1 || Random_number == 3 || Random_number == 5 || Random_number == 7) {
+				return false;
+			}
+			return true;
+		case 50:
+			if (Random_number == 1 || Random_number == 3 || Random_number == 5 || Random_number == 7
+					|| Random_number == 9) {
+				return false;
+			}
+			return true;
+		case 40:
+			if (Random_number == 0 || Random_number == 1 || Random_number == 3 || Random_number == 5
+					|| Random_number == 7 || Random_number == 9) {
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 
 	private void change(String tail) {
@@ -78,7 +331,7 @@ public class S_Analysis_Battle {
 				b.now_player1_Monster_OriginName = monster_origin;
 				b.now_player1_Monster_NickName = b.player1_Monster_NickName[monster_index];
 				b.order = b.player2_id;
-				String msg = myID+" 님이 "+b.now_player1_Monster_NickName+" 으로 교체하였습니다.";
+				String msg = myID + " 님이 " + b.now_player1_Monster_NickName + " 으로 교체하였습니다.";
 				b.player1_msg = msg;
 				b.player2_msg = msg;
 				now_Battle = b;
@@ -94,13 +347,15 @@ public class S_Analysis_Battle {
 				b.now_player2_Monster_OriginName = monster_origin;
 				b.now_player2_Monster_NickName = b.player2_Monster_NickName[monster_index];
 				b.order = b.player1_id;
-				String msg = myID+" 님이 "+b.now_player2_Monster_NickName+" 으로 교체하였습니다.";
+				String msg = myID + " 님이 " + b.now_player2_Monster_NickName + " 으로 교체하였습니다.";
 				b.player1_msg = msg;
 				b.player2_msg = msg;
 				now_Battle = b;
 				break;
 			}
 		}
+		now_Battle.settingSkill();
+
 		TC_Object object = TC_ObjectSet(now_Battle);
 		ArrayList<S_TC> TCList = s.getTCList();
 		for (S_TC s : TCList) {
@@ -126,7 +381,7 @@ public class S_Analysis_Battle {
 
 		String attackID = tail.substring(0, blankIndex);
 		String reID = tail.substring(blankIndex + 1);
-		System.out.println("공격자 :"+attackID+"받는자 :"+reID);
+		System.out.println("공격자 :" + attackID + "받는자 :" + reID);
 		S_Battle nowBattle = null;
 		for (S_Battle b : battleList) {
 			if ((b.player1_id.equals(attackID) && b.player2_id.equals(reID))
@@ -201,7 +456,7 @@ public class S_Analysis_Battle {
 							+ String.valueOf(count) + " 만큼의 데미지를 줬습니다.";
 					nowBattle.order = reID;
 				} else {
-					nowBattle.player1_Monster_nowP[player2_M_number] = nowBattle.player1_Monster_nowP[player2_M_number]
+					nowBattle.player1_Monster_nowP[player1_M_number] = nowBattle.player1_Monster_nowP[player1_M_number]
 							- 1;
 					nowBattle.player1_msg = nowBattle.now_player2_Monster_NickName + " 에게 \n" + "공격 "
 							+ String.valueOf(1) + " 만큼의 데미지를 받았습니다.";
@@ -309,6 +564,9 @@ public class S_Analysis_Battle {
 				break;
 			}
 		}
+
+		object.setPlayer1_Monster_Skill(battle.now_player1_Monster_Skill);
+		object.setPlayer2_Monster_Skill(battle.now_player2_Monster_Skill);
 
 		object.setBattle_order(battle.order);
 		object.setPlayer1_msg(battle.player1_msg);

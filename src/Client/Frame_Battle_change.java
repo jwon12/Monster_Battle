@@ -292,7 +292,7 @@ public class Frame_Battle_change extends JFrame {
 			
 
 		} else {
-			opponectID = o.getPlayer2_id();
+			opponectID = o.getPlayer1_id();
 			m1_nick_Label.setText(o.getPlayer2_Monster_NickName_All()[0]);
 			m1_origin_Label.setText(o.getPlayer2_Monster_OriginName_All()[0]);
 			m1_Lv.setText("Lv." + String.valueOf(o.getPlayer2_Monster_Lv_All()[0]));

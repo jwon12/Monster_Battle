@@ -84,7 +84,7 @@ public class Frame_Join extends JFrame {
 		contentPane.add(NickTextField);
 		NickTextField.setColumns(10);
 
-		String[] MonsterList = { "이상해씨", "꼬부기", "닥트리오" };
+		String[] MonsterList = { "이상해씨", "꼬부기", "파이리" ,"닥트리오" };
 
 		comboBox = new JComboBox<String>(MonsterList);
 		comboBox.setBounds(12, 209, 84, 23);
