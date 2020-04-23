@@ -46,26 +46,31 @@ public class S_Analysis {
 
 		switch (fist) {
 		case "/login":
-			String idNickName = A_Login.Ck_IDPS(second);
-			if (idNickName == null) {
-				Sin.send("/login false");
-			} else {
-				Sin.send("/login true " + idNickName);
-				Sin.setIDNickName(idNickName);
-				idList.add(Sin.getID());
-				TCList.add(Sin);
-				for (String id : idList) {
-					for (S_TC s : TCList) {
-						s.send("/room addmember " + id);
-						try {
-							Thread.sleep(700);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+			boolean ck = A_Login.ck_comeIn(second , idList);
+			if(ck) {
+				String idNickName = A_Login.Ck_IDPS(second);
+				if (idNickName == null) {
+					Sin.send("/login false");
+				} else {
+					Sin.send("/login true " + idNickName);
+					Sin.setIDNickName(idNickName);
+					idList.add(Sin.getID());
+					TCList.add(Sin);
+					for (String id : idList) {
+						for (S_TC s : TCList) {
+							s.send("/room addmember " + id);
+							try {
+								Thread.sleep(700);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
-				}
-
+					
+				}				
+			}else {
+				Sin.send("/login falseID");
 			}
 			break;
 		case "/room":

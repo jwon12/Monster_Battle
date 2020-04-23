@@ -2,7 +2,6 @@ package Server;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
@@ -13,23 +12,26 @@ public class S_TC extends Thread {
 
 	private Socket withClient = null;
 	private Socket withC_Object = null;
-	private ServerSocket serverS_Object = null;
+	private Socket withC_listObject = null;
+	
 	private S_Analysis Analysis = null;
 	private InputStream reMsg = null;
+	
 	private OutputStream sendMsg = null;
-	private InputStream reMsg2 = null;
-	private OutputStream sendMsg2 = null;
-	private ObjectInputStream reObject = null;
-	private ObjectOutputStream sendObject = null;
+	private OutputStream sendObject = null;
+	private OutputStream sendObject2 = null;
+	
+	private ObjectOutputStream send_Object_Output = null;
+	private ObjectOutputStream send_listObject_Output = null;
 	private S_TC mySin = null;
 	private String myID = null;
 	private String myNickname = null;
 
-	public S_TC(Socket withClient, ServerSocket serverS_Object) throws Exception {
+	public S_TC(Socket withClient, ServerSocket serverS_Object, ServerSocket serverS_listObject) throws Exception {
 		this.withClient = withClient;
-		this.serverS_Object = serverS_Object;
 		
 		withC_Object = serverS_Object.accept();
+		withC_listObject = serverS_listObject.accept();
 		
 		Analysis = S_Analysis.getInstance();
 		mySin = this;
@@ -41,33 +43,23 @@ public class S_TC extends Thread {
 		recive();
 	}
 
-	private void O_recive() {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while (true) {
-					try {
-						reMsg2 = withC_Object.getInputStream();
-						reObject = new ObjectInputStream(reMsg2);
-						TC_Object S_Object = (TC_Object)reObject.readObject();
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-
-				}
-			}
-		}).start();
-
+	public void list_O_send(TC_listObject a) {
+		try {
+			sendObject2 = withC_listObject.getOutputStream();
+			send_listObject_Output = new ObjectOutputStream(sendObject2);
+			send_listObject_Output.writeObject(a);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+
 	
 	public void O_send(TC_Object a) {
 		try {
-			sendMsg2 = withC_Object.getOutputStream();
-			sendObject = new ObjectOutputStream(sendMsg2);
-			sendObject.writeObject(a);
+			sendObject = withC_Object.getOutputStream();
+			send_Object_Output = new ObjectOutputStream(sendObject);
+			send_Object_Output.writeObject(a);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

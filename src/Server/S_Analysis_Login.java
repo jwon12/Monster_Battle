@@ -29,4 +29,21 @@ public class S_Analysis_Login {
 		return null;
 	}
 
+	public boolean ck_comeIn(String second, ArrayList<String> idList) {
+		int index = 0;
+		for(int i = 0 ; i < second.length() ; i++) {
+			if(second.charAt(i) == ' ') {
+				index = i;
+			}
+		}
+		String id = second.substring(0,index);
+		for(String comeIn_id : idList) {
+			if(comeIn_id.equals(id)){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
 }

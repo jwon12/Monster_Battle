@@ -56,35 +56,34 @@ public class Frame_Room extends JFrame {
 		textField = new JTextField();
 		textField.setBounds(12, 380, 351, 30);
 		textField.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String msg = textField.getText();
 				textField.setText("");
-				ClientSin.send("/room chat "+myID+" "+msg);
-				
+				ClientSin.send("/room chat " + myID + " " + msg);
+
 			}
 		});
-		
+
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		JButton sendButton = new JButton("보내기");
 		sendButton.setBounds(375, 383, 97, 23);
 		sendButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String msg = textField.getText();
 				textField.setText("");
-				ClientSin.send("/room chat "+myID+" "+msg);
+				ClientSin.send("/room chat " + myID + " " + msg);
 			}
 		});
 		contentPane.add(sendButton);
 
-		
 		list = new JList(lm);
-		lm.addElement(myID);
+		lm.addElement(myID + " ( me )");
 		list.setBackground(Color.LIGHT_GRAY);
 		list.setBounds(12, 50, 146, 320);
 		contentPane.add(list);
@@ -92,36 +91,54 @@ public class Frame_Room extends JFrame {
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(list, popupMenu);
 
-		JMenuItem mntmNewMenuItem = new JMenuItem("대전 신청");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-			
+		JMenuItem Battle_apply_MenuItem = new JMenuItem("대전 신청");
+		Battle_apply_MenuItem.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String opponent_id = (String)list.getSelectedValue();
-				if(opponent_id == null) {
+				String opponent_id = (String) list.getSelectedValue();
+				if (opponent_id == null) {
 					JOptionPane.showMessageDialog(null, "대전할 대상을 선택하세요.");
-				}else if(opponent_id.equals(myID)) {
+				} else if (opponent_id.equals(myID+" ( me )")) {
 					JOptionPane.showMessageDialog(null, "나자신은 대상으로 선택할수없습니다.");
-				}else {
+				} else {
 					System.out.println(opponent_id);
-					ClientSin.send("/battle apply "+myID+" "+opponent_id);
+					ClientSin.send("/battle apply " + myID + " " + opponent_id);
 					Frame_Battle_applySend s = new Frame_Battle_applySend(opponent_id);
 					C_Analysis a = C_Analysis.getInstance();
 					a.setFrame_send(s);
 				}
 			}
 		});
-		popupMenu.add(mntmNewMenuItem);
+		popupMenu.add(Battle_apply_MenuItem);
+		JMenuItem Battle_List_MenuItem = new JMenuItem("대전 기록");
+		Battle_List_MenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String select_id = (String) list.getSelectedValue();
+				if (select_id == null) {
+					JOptionPane.showMessageDialog(null, "대전할 대상을 선택하세요.");
+				} else if (select_id.equals(myID + " ( me )")) {
+					ClientSin.send("/room battleList " + myID + " " + myID);
+				} else {
+					System.out.println(select_id);
+					ClientSin.send("/room battleList " + myID + " " + select_id);
+				}
+
+			}
+		});
+		popupMenu.add(Battle_List_MenuItem);
 
 		textArea = new JTextArea();
 		textArea.setBackground(Color.LIGHT_GRAY);
 		textArea.setBounds(170, 50, 312, 320);
+		textArea.setEditable(false);
 		contentPane.add(textArea);
 
 		this.setVisible(true);
-		
-	}
 
+	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
@@ -142,11 +159,11 @@ public class Frame_Room extends JFrame {
 			}
 		});
 	}
-	
-	
+
 	public String getMyNickName() {
 		return myNickName;
 	}
+
 	public String getMyID() {
 		return myID;
 	}

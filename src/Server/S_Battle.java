@@ -51,6 +51,8 @@ public class S_Battle {
 	String now_player2_Monster_OriginName;
 	String now_player2_Monster_NickName;
 	String[][] now_player2_Monster_Skill;
+	
+	String victory;
 
 	S_Battle(String sendID, String reID) {
 

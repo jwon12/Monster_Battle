@@ -73,8 +73,23 @@ public class DAO_Monster implements DAO_Interface{
 	}
 	@Override
 	public void update(Object o) {
-		// TODO Auto-generated method stub
-		
+		DTO_Monster DTO_MS = (DTO_Monster)o;
+		if(connect()) {
+			try {
+				String sql = "update monster set lv = ? where id = ? and origin = ?";
+				PreparedStatement pst = conn.prepareStatement(sql);
+				pst.setInt(1, DTO_MS.getLv());
+				pst.setString(2, DTO_MS.getId());
+				pst.setString(3, DTO_MS.getOrigin());
+				
+				int r = pst.executeUpdate();
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
 	}
 	@Override
 	public ArrayList<DTO_Monster> selAll() {

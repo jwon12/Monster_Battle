@@ -239,6 +239,9 @@ public class Frame_Battle_change extends JFrame {
 			m1_Lv.setText("Lv." + String.valueOf(o.getPlayer1_Monster_Lv_All()[0]));
 			totalP = o.getPlayer1_Monster_totalP_All()[0];
 			nowP = o.getPlayer1_Monster_nowP_All()[0];
+			if(nowP < 0) {
+				nowP = 0;
+			}
 			m1_totalP.setText("/ " + String.valueOf(totalP));
 			m1_nowP.setText(String.valueOf(nowP));
 			nowP_bar = nowP_bar_location(totalP, nowP);
@@ -249,6 +252,9 @@ public class Frame_Battle_change extends JFrame {
 			m2_Lv.setText("Lv." + String.valueOf(o.getPlayer1_Monster_Lv_All()[1]));
 			totalP = o.getPlayer1_Monster_totalP_All()[1];
 			nowP = o.getPlayer1_Monster_nowP_All()[1];
+			if(nowP < 0) {
+				nowP = 0;
+			}
 			m2_totalP.setText("/ " + String.valueOf(totalP));
 			m2_nowP.setText(String.valueOf(nowP));
 			nowP_bar = nowP_bar_location(totalP, nowP);
@@ -259,6 +265,9 @@ public class Frame_Battle_change extends JFrame {
 			m3_Lv.setText("Lv." + String.valueOf(o.getPlayer1_Monster_Lv_All()[2]));
 			totalP = o.getPlayer1_Monster_totalP_All()[2];
 			nowP = o.getPlayer1_Monster_nowP_All()[2];
+			if(nowP < 0) {
+				nowP = 0;
+			}
 			m3_totalP.setText("/ " + String.valueOf(totalP));
 			m3_nowP.setText(String.valueOf(nowP));
 			nowP_bar = nowP_bar_location(totalP, nowP);
@@ -298,6 +307,9 @@ public class Frame_Battle_change extends JFrame {
 			m1_Lv.setText("Lv." + String.valueOf(o.getPlayer2_Monster_Lv_All()[0]));
 			totalP = o.getPlayer2_Monster_totalP_All()[0];
 			nowP = o.getPlayer2_Monster_nowP_All()[0];
+			if(nowP < 0) {
+				nowP = 0;
+			}
 			m1_totalP.setText("/ " + String.valueOf(totalP));
 			m1_nowP.setText(String.valueOf(nowP));
 			nowP_bar = nowP_bar_location(totalP, nowP);
@@ -308,6 +320,9 @@ public class Frame_Battle_change extends JFrame {
 			m2_Lv.setText("Lv." + String.valueOf(o.getPlayer2_Monster_Lv_All()[1]));
 			totalP = o.getPlayer2_Monster_totalP_All()[1];
 			nowP = o.getPlayer2_Monster_nowP_All()[1];
+			if(nowP < 0) {
+				nowP = 0;
+			}
 			m2_totalP.setText("/ " + String.valueOf(totalP));
 			m2_nowP.setText(String.valueOf(nowP));
 			nowP_bar = nowP_bar_location(totalP, nowP);
@@ -318,6 +333,9 @@ public class Frame_Battle_change extends JFrame {
 			m3_Lv.setText("Lv." + String.valueOf(o.getPlayer2_Monster_Lv_All()[2]));
 			totalP = o.getPlayer2_Monster_totalP_All()[2];
 			nowP = o.getPlayer2_Monster_nowP_All()[2];
+			if(nowP < 0) {
+				nowP = 0;
+			}
 			m3_totalP.setText("/ " + String.valueOf(totalP));
 			m3_nowP.setText(String.valueOf(nowP));
 			nowP_bar = nowP_bar_location(totalP, nowP);

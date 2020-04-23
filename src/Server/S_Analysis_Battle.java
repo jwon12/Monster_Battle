@@ -6,7 +6,8 @@ import java.util.Random;
 public class S_Analysis_Battle {
 	S_Analysis s = null;
 	ArrayList<S_Battle> battleList = new ArrayList<>();
-	DAO_Monster DAO_sin = null;
+	DAO_Monster DAO_Monster_sin = null;
+	DAO_BattleList DAO_BattleList_sin = null;
 	Random r = new Random();
 
 	public void ckMsg(String msg) {
@@ -55,6 +56,114 @@ public class S_Analysis_Battle {
 			break;
 		case "skill":
 			skill(tail);
+			break;
+		case "abstention":
+			abstention(tail);
+			break;
+		}
+
+	}
+
+	private void abstention(String tail) {
+		int blankIndex = get_blankIndex(tail);
+		String abstention_ID = tail.substring(0,blankIndex);
+		String victory_ID = tail.substring(blankIndex+1);
+		S_Battle now_Battle = null;
+		for (S_Battle b : battleList) {
+			if (b.player1_id.equals(abstention_ID) && b.player2_id.equals(victory_ID)
+					|| b.player2_id.equals(abstention_ID) && b.player1_id.equals(victory_ID)) {
+				now_Battle = b;
+				break;
+			}
+		}
+		
+		now_Battle.victory = victory_ID;
+		ArrayList<S_TC> TCList = s.getTCList();
+		for (S_TC s : TCList) {
+			if (s.getID().equals(abstention_ID) || s.getID().equals(victory_ID)) {
+				s.send("/battle end " + now_Battle.victory);
+			}
+		}
+		BattleEed(now_Battle);
+		
+	}
+
+	private void now_Monster_P_Ck(S_Battle now_Battle) {
+		int player1cnt = 0;
+		int player2cnt = 0;
+
+		for (int i = 0; i < now_Battle.player1_Monster_nowP.length; i++) {
+			if (now_Battle.player1_Monster_nowP[i] <= 0) {
+				player1cnt++;
+			}
+			if (now_Battle.player2_Monster_nowP[i] <= 0) {
+				player2cnt++;
+			}
+		}
+		if (player1cnt == 3) { // player2 승리
+			now_Battle.victory = now_Battle.player2_id;
+			return;
+		} else if (player2cnt == 3) { // player1 승리
+			now_Battle.victory = now_Battle.player1_id;
+			return;
+		}
+		int player1M_number = 0;
+		int player2M_number = 0;
+
+		for (int i = 0; i < now_Battle.player1_Monster_OriginName.length; i++) {
+			if (now_Battle.now_player1_Monster_OriginName.equals(now_Battle.player1_Monster_OriginName[i])) {
+				player1M_number = i;
+			}
+			if (now_Battle.now_player2_Monster_OriginName.equals(now_Battle.player2_Monster_OriginName[i])) {
+				player2M_number = i;
+			}
+		}
+		if (now_Battle.player1_Monster_nowP[player1M_number] <= 0) {
+			changeMonster("player1", now_Battle);
+		} else if (now_Battle.player2_Monster_nowP[player2M_number] <= 0) {
+			changeMonster("player2", now_Battle);
+		}
+
+	}
+
+	private void changeMonster(String player, S_Battle now_Battle) {
+		switch (player) {
+		case "player1":
+			for (int i = 0; i < now_Battle.player1_Monster_nowP.length; i++) {
+				if (now_Battle.player1_Monster_nowP[i] > 0) {
+					now_Battle.player1_msg = now_Battle.player1_msg + "\n" + now_Battle.now_player1_Monster_NickName
+							+ " 가 쓸어졌습니다";
+					now_Battle.player2_msg = now_Battle.player2_msg + "\n" + now_Battle.now_player1_Monster_NickName
+							+ " 가 쓸어졌습니다";
+					now_Battle.now_player1_Monster_OriginName = now_Battle.player1_Monster_OriginName[i];
+					now_Battle.now_player1_Monster_NickName = now_Battle.player1_Monster_NickName[i];
+					now_Battle.player1_msg = now_Battle.player1_msg + "\n" + now_Battle.now_player1_Monster_NickName
+							+ " 으로 교체되었습니다.";
+					now_Battle.player2_msg = now_Battle.player2_msg + "\n" + now_Battle.now_player1_Monster_NickName
+							+ " 으로 교체되었습니다.";
+					now_Battle.settingSkill();
+					break;
+				}
+			}
+			break;
+		case "player2":
+			for (int i = 0; i < now_Battle.player2_Monster_nowP.length; i++) {
+				if (now_Battle.player2_Monster_nowP[i] > 0) {
+					now_Battle.player1_msg = now_Battle.player1_msg + "\n" + now_Battle.now_player2_Monster_NickName
+							+ " 가 쓸어졌습니다";
+					now_Battle.player2_msg = now_Battle.player2_msg + "\n" + now_Battle.now_player2_Monster_NickName
+							+ " 가 쓸어졌습니다";
+					now_Battle.now_player2_Monster_OriginName = now_Battle.player2_Monster_OriginName[i];
+					now_Battle.now_player2_Monster_NickName = now_Battle.player2_Monster_NickName[i];
+					now_Battle.player1_msg = now_Battle.player1_msg + "\n" + now_Battle.now_player2_Monster_NickName
+							+ " 으로 교체되었습니다.";
+					now_Battle.player2_msg = now_Battle.player2_msg + "\n" + now_Battle.now_player2_Monster_NickName
+							+ " 으로 교체되었습니다.";
+					now_Battle.settingSkill();
+					break;
+				}
+			}
+
 			break;
 		}
 
@@ -158,10 +267,6 @@ public class S_Analysis_Battle {
 				now_Battle.player1_msg = now_Battle.now_player1_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
 				now_Battle.player2_msg = now_Battle.now_player1_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
 
-//					now_Battle.order = reID;
-//					now_Battle.player1_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
-//					now_Battle.player2_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
-//				
 			}
 
 		} else {
@@ -219,9 +324,9 @@ public class S_Analysis_Battle {
 				}
 				now_Battle.order = reID;
 				now_Battle.player1_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격\n" + skillName + " 스킬 \n"
-						+ Damage + " 만큼의 데미지를 줬습니다.";
-				now_Battle.player2_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격\n" + skillName + " 스킬 \n"
 						+ Damage + " 만큼의 데미지를 받았습니다.";
+				now_Battle.player2_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격\n" + skillName + " 스킬 \n"
+						+ Damage + " 만큼의 데미지를 줬습니다.";
 			} else {
 				now_Battle.order = reID;
 				now_Battle.player1_msg = now_Battle.now_player2_Monster_NickName + " 가 \n스킬 공격에 실패하였습니다.";
@@ -229,12 +334,23 @@ public class S_Analysis_Battle {
 
 			}
 		}
-		TC_Object object = TC_ObjectSet(now_Battle);
-		ArrayList<S_TC> TCList = s.getTCList();
-		for (S_TC s : TCList) {
-			if (s.getID().equals(useID) || s.getID().equals(reID)) {
-				s.O_send(object);
+		now_Monster_P_Ck(now_Battle);
+		if (now_Battle.victory == null) {
+			TC_Object object = TC_ObjectSet(now_Battle);
+			ArrayList<S_TC> TCList = s.getTCList();
+			for (S_TC s : TCList) {
+				if (s.getID().equals(useID) || s.getID().equals(reID)) {
+					s.O_send(object);
+				}
 			}
+		} else {
+			ArrayList<S_TC> TCList = s.getTCList();
+			for (S_TC s : TCList) {
+				if (s.getID().equals(useID) || s.getID().equals(reID)) {
+					s.send("/battle end " + now_Battle.victory);
+				}
+			}
+			BattleEed(now_Battle);
 		}
 	}
 
@@ -477,13 +593,102 @@ public class S_Analysis_Battle {
 			}
 
 		}
-		TC_Object object = TC_ObjectSet(nowBattle);
-		ArrayList<S_TC> TCList = s.getTCList();
-		for (S_TC s : TCList) {
-			if (s.getID().equals(attackID) || s.getID().equals(reID)) {
-				s.O_send(object);
+		now_Monster_P_Ck(nowBattle);
+		if (nowBattle.victory == null) {
+			TC_Object object = TC_ObjectSet(nowBattle);
+			ArrayList<S_TC> TCList = s.getTCList();
+			for (S_TC s : TCList) {
+				if (s.getID().equals(attackID) || s.getID().equals(reID)) {
+					s.O_send(object);
+				}
 			}
+		} else {
+			ArrayList<S_TC> TCList = s.getTCList();
+			for (S_TC s : TCList) {
+				if (s.getID().equals(attackID) || s.getID().equals(reID)) {
+					s.send("/battle end " + nowBattle.victory);
+				}
+			}
+			BattleEed(nowBattle);
 		}
+	}
+
+	private void BattleEed(S_Battle nowBattle) {
+		DAO_BattleList_sin = DAO_BattleList.getInstance();
+		DAO_Monster_sin = DAO_Monster.getInstance();
+
+		String victoryID = nowBattle.victory;
+		if (victoryID.equals(nowBattle.player1_id)) {
+			DTO_Monster DTO_m = new DTO_Monster();
+			DTO_m.setId(nowBattle.player1_id);
+			DTO_m.setLv(nowBattle.player1_Monster_Lv[0] + 1);
+			DTO_m.setOrigin(nowBattle.player1_Monster_OriginName[0]);
+			DAO_Monster_sin.update(DTO_m);
+
+			DTO_m.setId(nowBattle.player1_id);
+			DTO_m.setLv(nowBattle.player1_Monster_Lv[1] + 1);
+			DTO_m.setOrigin(nowBattle.player1_Monster_OriginName[1]);
+			DAO_Monster_sin.update(DTO_m);
+
+			DTO_m.setId(nowBattle.player1_id);
+			DTO_m.setLv(nowBattle.player1_Monster_Lv[2] + 1);
+			DTO_m.setOrigin(nowBattle.player1_Monster_OriginName[2]);
+			DAO_Monster_sin.update(DTO_m);
+
+			DTO_BattleList DTO_b1 = new DTO_BattleList();
+
+			DTO_b1.setMyID(nowBattle.player1_id);
+			DTO_b1.setOpponent(nowBattle.player2_id);
+			DTO_b1.setResult(1);
+
+			DAO_BattleList_sin.insert(DTO_b1);
+
+			DTO_BattleList DTO_b2 = new DTO_BattleList();
+
+			DTO_b2.setMyID(nowBattle.player2_id);
+			DTO_b2.setOpponent(nowBattle.player1_id);
+			DTO_b2.setResult(0);
+
+			DAO_BattleList_sin.insert(DTO_b2);
+			
+			battleList.remove(nowBattle);
+
+		} else {
+			DTO_Monster DTO_m = new DTO_Monster();
+			DTO_m.setId(nowBattle.player2_id);
+			DTO_m.setLv(nowBattle.player2_Monster_Lv[0] + 1);
+			DTO_m.setOrigin(nowBattle.player2_Monster_OriginName[0]);
+			DAO_Monster_sin.update(DTO_m);
+
+			DTO_m.setId(nowBattle.player2_id);
+			DTO_m.setLv(nowBattle.player2_Monster_Lv[1] + 1);
+			DTO_m.setOrigin(nowBattle.player2_Monster_OriginName[1]);
+			DAO_Monster_sin.update(DTO_m);
+
+			DTO_m.setId(nowBattle.player2_id);
+			DTO_m.setLv(nowBattle.player2_Monster_Lv[2] + 1);
+			DTO_m.setOrigin(nowBattle.player2_Monster_OriginName[2]);
+			DAO_Monster_sin.update(DTO_m);
+
+			DTO_BattleList DTO_b1 = new DTO_BattleList();
+
+			DTO_b1.setMyID(nowBattle.player2_id);
+			DTO_b1.setOpponent(nowBattle.player1_id);
+			DTO_b1.setResult(1);
+
+			DAO_BattleList_sin.insert(DTO_b1);
+
+			DTO_BattleList DTO_b2 = new DTO_BattleList();
+
+			DTO_b2.setMyID(nowBattle.player1_id);
+			DTO_b2.setOpponent(nowBattle.player2_id);
+			DTO_b2.setResult(0);
+
+			DAO_BattleList_sin.insert(DTO_b2);
+			
+			battleList.remove(nowBattle);
+		}
+
 	}
 
 	private void applyfalse(String tail) {
@@ -501,7 +706,7 @@ public class S_Analysis_Battle {
 	}
 
 	private void applytrue(String tail) {
-		DAO_sin = DAO_Monster.getInstance();
+		DAO_Monster_sin = DAO_Monster.getInstance();
 		int blankIndex = get_blankIndex(tail);
 
 		String sendID = tail.substring(0, blankIndex);
@@ -578,7 +783,7 @@ public class S_Analysis_Battle {
 	private void battleSet(S_Battle battle) {
 		int i = 0;
 		int j = 0;
-		ArrayList<DTO_Monster> mList = DAO_sin.selAll();
+		ArrayList<DTO_Monster> mList = DAO_Monster_sin.selAll();
 		for (DTO_Monster m : mList) {
 			if (m.getId().equals(battle.player1_id)) {
 				battle.player1_Monster_OriginName[i] = m.getOrigin();

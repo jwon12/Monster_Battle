@@ -44,6 +44,7 @@ public class TC_Object implements Serializable {
 	private String player2_msg;
 
 	private String Battle_order;
+	private String victory;
 
 	@Override
 	public String toString() {
@@ -283,4 +284,12 @@ public class TC_Object implements Serializable {
 		this.player2_Monster_Skill = player2_Monster_Skill;
 	}
 
+	public String getVictory() {
+		return victory;
+	}
+
+	public void setVictory(String victory) {
+		this.victory = victory;
+	}
+	
 }

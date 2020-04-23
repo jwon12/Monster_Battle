@@ -9,6 +9,7 @@ public class S_Main {
 	
 	ServerSocket serverS = null;
 	ServerSocket serverS_Object = null;
+	ServerSocket serverS_listObject = null;
 	Socket withClient = null;
 	S_Analysis Analysis = S_Analysis.getInstance();
 	ArrayList<Socket> CList = new ArrayList<>();
@@ -18,6 +19,8 @@ public class S_Main {
 		serverS.bind(new InetSocketAddress("10.0.0.109",9999));
 		serverS_Object = new ServerSocket();
 		serverS_Object.bind(new InetSocketAddress("10.0.0.109",9998));
+		serverS_listObject = new ServerSocket();
+		serverS_listObject.bind(new InetSocketAddress("10.0.0.109",9997));
 		
 		
 		
@@ -26,7 +29,7 @@ public class S_Main {
 			withClient = serverS.accept();
 			CList.add(withClient);
 			System.out.println(withClient.getInetAddress()+"클라이언트 접속 함");
-			S_TC s = new S_TC(withClient,serverS_Object);
+			S_TC s = new S_TC(withClient,serverS_Object,serverS_listObject);
 			s.start();
 		}
 		

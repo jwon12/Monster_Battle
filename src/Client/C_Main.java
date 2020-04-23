@@ -9,12 +9,15 @@ public class C_Main {
 	
 	Socket withServer = null;
 	Socket withObjectServer = null;
+	Socket withlistObjectServer = null;
 	
 	C_Main() throws Exception{
 		withServer = new Socket("10.0.0.109",9999);
 		Thread.sleep(1000);
 		withObjectServer = new Socket("10.0.0.109",9998);
-		new C_TC(withServer,withObjectServer);
+		Thread.sleep(1000);
+		withlistObjectServer = new Socket("10.0.0.109",9997);
+		new C_TC(withServer,withObjectServer,withlistObjectServer);
 	}
 	
 	

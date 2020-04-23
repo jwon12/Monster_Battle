@@ -24,7 +24,24 @@ public class C_Analysis_Battle {
 			break;
 		case "reject":
 			reject(tail);
+			break;
+		case "end":
+			battleEnd(tail);
+			break;
 		}		
+	}
+
+	private void battleEnd(String tail) {
+		String victoryID = tail;
+		C_Analysis a = C_Analysis.getInstance();
+		Frame_Battle F_Battle = a.getF_Battle();
+		if(victoryID.equals(F_Battle.getMyID())){
+			JOptionPane.showMessageDialog(null, " 승리 ");			
+		}else {
+			JOptionPane.showMessageDialog(null, " 패배 ");
+		}
+		F_Battle.setVisible(false);
+		a.setFrame_battle(null);
 	}
 
 	private void reject(String tail) {

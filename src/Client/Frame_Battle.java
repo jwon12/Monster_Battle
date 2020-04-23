@@ -52,13 +52,13 @@ public class Frame_Battle extends JFrame {
 		contentPane.setLayout(null);
 
 		Status_panel = new JPanel();
-//		Status_panel.setBackground(new Color(230, 230, 250));
 		Status_panel.setBounds(12, 267, 254, 128);
 		contentPane.add(Status_panel);
 		Status_panel.setLayout(null);
 		
 		msgTextArea = new JTextArea();
-		msgTextArea.setBounds(12, 46, 230, 30);
+		msgTextArea.setBounds(12, 10, 230, 108);
+		msgTextArea.setEditable(false);
 		Status_panel.add(msgTextArea);
 		
 		
@@ -104,7 +104,7 @@ public class Frame_Battle extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				abstention();
 				
 			}
 		});
@@ -202,6 +202,12 @@ public class Frame_Battle extends JFrame {
 		}
 	}
 
+	protected void abstention() {
+		String msg = "/battle In_battle abstention "+myID+" "+opponentID;
+		myTCsin.send(msg);
+		end();
+	}
+
 	protected void skill() {
 		Frame_Battle_Skill F_Skill = new Frame_Battle_Skill(myID,opponentID);
 		F_Skill.setting_skill(Battle_object);
@@ -272,6 +278,7 @@ public class Frame_Battle extends JFrame {
 		
 		String Server_msg = o.getPlayer2_msg();
 		msgTextArea.setText(Server_msg);
+		System.out.println("배틀 메세지 :"+Server_msg);
 		String order = o.getBattle_order();
 		if(order.equals(myID)) {
 			attack_btn.setEnabled(true);
@@ -344,6 +351,7 @@ public class Frame_Battle extends JFrame {
 
 		opponent_M_nowP_bar.setBounds(0, 0, nowP_bar, 20);
 		String Server_msg = o.getPlayer1_msg();
+		System.out.println("배틀 메세지 :"+Server_msg);
 		msgTextArea.setText(Server_msg);
 		String order = o.getBattle_order();
 		if(order.equals(myID)) {
@@ -361,4 +369,12 @@ public class Frame_Battle extends JFrame {
 		this.setVisible(true);
 
 	}
+	public void end() {
+		this.setVisible(false);
+	}
+
+	public String getMyID() {
+		return myID;
+	}
+	
 }
